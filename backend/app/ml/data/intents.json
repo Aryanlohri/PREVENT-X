@@ -1,0 +1,206 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi", "Hello", "Hey", "Good morning", "Good evening", "Is anyone there?", "Hi there"
+      ],
+      "responses": [
+        "Hello! I'm your PreventX AI Companion. How can I help you with your health today?",
+        "Hi there! How are you feeling today?",
+        "Greetings! How can I assist you with your wellness journey?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye", "See you later", "Goodbye", "I have to go", "Talk to you later"
+      ],
+      "responses": [
+        "Take care of your health! Goodbye.",
+        "Stay healthy! See you later.",
+        "Goodbye! Remember to log your vitals today."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks", "Thank you", "That's helpful", "Thanks a lot"
+      ],
+      "responses": [
+        "You're welcome! Your health is my priority.",
+        "Happy to help!",
+        "Any time! Let me know if you have more questions."
+      ]
+    },
+    {
+      "tag": "identity",
+      "patterns": [
+        "Who are you", "What are you", "Are you a doctor", "What is your name"
+      ],
+      "responses": [
+        "I am the PreventX AI Companion. While I am an advanced AI trained on medical data, I am not a substitute for a licensed medical professional.",
+        "I'm an AI health assistant designed by PreventX to help you track your vitals and answer general health queries."
+      ]
+    },
+    {
+      "tag": "diet_diabetes",
+      "patterns": [
+        "What should I eat for diabetes", "Diet for high blood sugar", "Diabetic food", "Can I eat sugar", "How to manage blood sugar with food"
+      ],
+      "responses": [
+        "For managing blood sugar, focus on complex carbohydrates (like whole grains, beans, and vegetables) over simple sugars. Prioritize lean proteins and healthy fats to prevent blood sugar spikes. Always monitor your post-meal glucose.",
+        "A diabetic-friendly diet emphasizes fiber-rich foods, leafy greens, and lean proteins. Avoid refined carbs and sugary drinks. Consult your personalized Diet & Exercise plan on your dashboard for exact macro ratios."
+      ]
+    },
+    {
+      "tag": "diet_hypertension",
+      "patterns": [
+        "What to eat for high blood pressure", "Diet for hypertension", "How to lower blood pressure naturally", "Low sodium diet"
+      ],
+      "responses": [
+        "To manage high blood pressure, the DASH diet is highly recommended. Reduce your sodium (salt) intake, eat more potassium-rich foods like bananas and spinach, and limit alcohol and caffeine.",
+        "Focus on reducing salt and processed foods. Eat plenty of fruits, vegetables, and whole grains. Regular cardiovascular exercise also helps lower blood pressure significantly."
+      ]
+    },
+    {
+      "tag": "workout_general",
+      "patterns": [
+        "How much should I exercise", "Best workout for beginners", "How to stay active", "What workout is best", "Cardio or weights"
+      ],
+      "responses": [
+        "The American Heart Association recommends at least 150 minutes of moderate-intensity aerobic activity per week, along with 2 days of strength training. Check your personalized Lifestyle Plan for specific recommendations!",
+        "A mix of cardiovascular exercise (like brisk walking or cycling) and strength training is optimal for overall health. If you have conditions like arthritis, low-impact activities like swimming or yoga are best."
+      ]
+    },
+    {
+      "tag": "mental_stress",
+      "patterns": [
+        "I am stressed", "How to relieve stress", "I feel overwhelmed", "Stress management techniques", "I need to relax"
+      ],
+      "responses": [
+        "I'm sorry you're feeling stressed. Try the 4-7-8 breathing technique: Inhale for 4 seconds, hold for 7, and exhale for 8. Taking a short walk or practicing mindfulness can also help lower cortisol levels.",
+        "Chronic stress affects your physical vitals like blood pressure. Try to take a 10-minute break away from screens, listen to calming music, or try progressive muscle relaxation. I am here for you."
+      ]
+    },
+    {
+      "tag": "mental_anxiety",
+      "patterns": [
+        "I have anxiety", "I feel anxious", "Panic attack", "How to stop worrying", "My chest is tight from anxiety"
+      ],
+      "responses": [
+        "Anxiety can feel very overwhelming, but you are safe right now. Try grounding yourself using the 5-4-3-2-1 method: Identify 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, and 1 you can taste.",
+        "Take a slow, deep breath. If you are experiencing frequent anxiety, consider speaking to a mental health professional. Regular sleep and limiting caffeine can also drastically reduce daily anxiety."
+      ]
+    },
+    {
+      "tag": "first_aid_cuts",
+      "patterns": [
+        "I cut myself", "How to treat a cut", "First aid for a wound", "Bleeding", "Wound care"
+      ],
+      "responses": [
+        "For minor cuts: 1. Wash your hands. 2. Stop the bleeding with gentle pressure. 3. Clean the wound with water (avoid harsh soaps/peroxide). 4. Apply an antibiotic ointment and a sterile bandage. If it's deep or won't stop bleeding after 15 minutes, please seek emergency care.",
+        "Apply firm, direct pressure with a clean cloth. Clean it gently with tap water. If the cut is jagged, gaping, or exposes fat/muscle, you may need stitches—go to an urgent care clinic."
+      ]
+    },
+    {
+      "tag": "general_bp",
+      "patterns": [
+        "What is normal blood pressure", "High BP numbers", "What does 120/80 mean", "Blood pressure ranges"
+      ],
+      "responses": [
+        "Normal blood pressure is typically around 120/80 mmHg or lower. Elevated is 120-129 / <80. Hypertension Stage 1 is 130-139 / 80-89. If your systolic (top) is over 180 or diastolic (bottom) is over 120, seek emergency medical attention.",
+        "A healthy reading is usually below 120/80 mmHg. The top number (systolic) measures artery pressure when the heart beats, and the bottom (diastolic) measures pressure between beats."
+      ]
+    },
+    {
+      "tag": "general_sugar",
+      "patterns": [
+        "What is normal blood sugar", "Fasting glucose ranges", "Blood sugar levels", "HbA1c meaning"
+      ],
+      "responses": [
+        "A normal fasting blood sugar level is generally between 70 and 99 mg/dL. A level of 100 to 125 mg/dL indicates prediabetes, and 126 mg/dL or higher suggests diabetes. Always consult your doctor for diagnosis.",
+        "Your fasting glucose should ideally be under 100 mg/dL. Two hours after eating, it should be under 140 mg/dL. Log your sugar daily in the PreventX Vitals section to track trends!"
+      ]
+    },
+    {
+      "tag": "app_vitals",
+      "patterns": [
+        "How do I log vitals", "Where is my blood pressure data", "How to use the dashboard", "Track heart rate"
+      ],
+      "responses": [
+        "You can log your vitals by navigating to the 'Vitals' section from the sidebar and clicking 'Add New Vital'. Your dashboard automatically visualizes the last 7 to 30 days of this data.",
+        "Head over to the Vitals page to input your measurements. PreventX uses this data to update your Health Risk Score automatically."
+      ]
+    },
+    {
+      "tag": "app_diet",
+      "patterns": [
+        "Where is my diet plan", "How do I get a workout plan", "Create a meal plan for me"
+      ],
+      "responses": [
+        "Your personalized diet and workout plan is located in the 'Diet & Exercise' tab on the sidebar. If it's empty, ensure you have filled out your Age, Weight, and Pre-existing conditions in your Profile!"
+      ]
+    },
+    {
+      "tag": "headache",
+      "patterns": [
+        "I have a headache", "My head hurts", "Migraine", "Throbbing pain in my head", "How to cure a headache"
+      ],
+      "responses": [
+        "For a standard headache, ensure you are fully hydrated and try resting in a quiet, dark room. Over-the-counter pain relievers like Ibuprofen or Acetaminophen can help. If it is severe, sudden, or accompanied by vision loss, seek immediate medical care.",
+        "Headaches are often caused by dehydration, stress, or lack of sleep. Drink a large glass of water and rest your eyes from screens."
+      ]
+    },
+    {
+      "tag": "fever",
+      "patterns": [
+        "I have a fever", "My temperature is high", "I feel hot and cold", "Chills and fever", "How to lower fever"
+      ],
+      "responses": [
+        "If you have a fever, the most important thing is to stay hydrated and rest. You can take Acetaminophen or Ibuprofen to lower your temperature. If the fever exceeds 103°F (39.4°C) or lasts more than 3 days, consult a physician.",
+        "A fever is your body's way of fighting an infection. Dress lightly, drink plenty of fluids, and monitor it. Seek emergency care if you experience difficulty breathing or severe chest pain."
+      ]
+    },
+    {
+      "tag": "stomach",
+      "patterns": [
+        "Stomach ache", "I feel nauseous", "My tummy hurts", "Diarrhea", "Vomiting", "Food poisoning"
+      ],
+      "responses": [
+        "For stomach distress, stick to the BRAT diet (Bananas, Rice, Applesauce, Toast) and sip clear fluids slowly to stay hydrated. Avoid dairy, caffeine, and spicy foods until you feel better.",
+        "Nausea and stomach pain can be caused by food poisoning or a viral bug. The priority is hydration. If you cannot keep fluids down for 24 hours, seek medical attention."
+      ]
+    },
+    {
+      "tag": "sleep",
+      "patterns": [
+        "I can't sleep", "Insomnia", "How to sleep better", "Trouble falling asleep", "Tired but can't sleep"
+      ],
+      "responses": [
+        "To improve your sleep, establish a consistent bedtime routine. Avoid screens, caffeine, and heavy meals at least an hour before bed. Ensure your bedroom is cool and dark.",
+        "Try a wind-down routine consisting of reading or listening to calm music. Natural supplements like Melatonin or Chamomile tea can also gently assist with sleep latency."
+      ]
+    },
+    {
+      "tag": "hydration",
+      "patterns": [
+        "How much water should I drink", "Am I dehydrated", "Water intake", "Benefits of drinking water"
+      ],
+      "responses": [
+        "A general rule is to drink at least 8 glasses (about 2 liters) of water a day, though this varies based on your weight and activity level. If your urine is pale yellow, you are well-hydrated.",
+        "Staying hydrated improves energy, brain function, and skin health. If you feel thirsty, you are already slightly dehydrated!"
+      ]
+    },
+    {
+      "tag": "chest_pain",
+      "patterns": [
+        "My chest hurts", "Chest pain", "Heart attack symptoms", "Tightness in chest"
+      ],
+      "responses": [
+        "🚨 WARNING: Chest pain can be a sign of a medical emergency like a heart attack (especially if it radiates to your arm/jaw, or is accompanied by shortness of breath and sweating). Please call emergency services (e.g., 911) immediately.",
+        "If you are experiencing sudden, severe chest tightness or pain, do not wait. Please contact emergency medical services right away. Do NOT try to diagnose this on your own."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1154 @@
+{
+    "fungal infection": {
+        "diet": [
+            "Antifungal Diet",
+            "Probiotics",
+            "Garlic",
+            "Coconut oil",
+            "Turmeric"
+        ],
+        "medication": [
+            "Antifungal Cream",
+            "Fluconazole",
+            "Terbinafine",
+            "Clotrimazole",
+            "Ketoconazole"
+        ],
+        "workout": [
+            "Avoid sugary foods",
+            "Consume probiotics",
+            "Increase intake of garlic",
+            "Include yogurt in diet",
+            "Limit processed foods",
+            "Stay hydrated",
+            "Consume green tea",
+            "Eat foods rich in zinc",
+            "Include turmeric in diet",
+            "Eat fruits and vegetables"
+        ]
+    },
+    "allergy": {
+        "diet": [
+            "Elimination Diet",
+            "Omega-3-rich foods",
+            "Vitamin C-rich foods",
+            "Quercetin-rich foods",
+            "Probiotics"
+        ],
+        "medication": [
+            "Antihistamines",
+            "Decongestants",
+            "Epinephrine",
+            "Corticosteroids",
+            "Immunotherapy"
+        ],
+        "workout": [
+            "Avoid allergenic foods",
+            "Consume anti-inflammatory foods",
+            "Include omega-3 fatty acids",
+            "Stay hydrated",
+            "Eat foods rich in vitamin C",
+            "Include quercetin-rich foods",
+            "Consume local honey",
+            "Limit processed foods",
+            "Include ginger in diet",
+            "Avoid artificial additives"
+        ]
+    },
+    "gerd": {
+        "diet": [
+            "Low-Acid Diet",
+            "Fiber-rich foods",
+            "Ginger",
+            "Licorice",
+            "Aloe vera juice"
+        ],
+        "medication": [
+            "Proton Pump Inhibitors (PPIs)",
+            "H2 Blockers",
+            "Antacids",
+            "Prokinetics",
+            "Antibiotics"
+        ],
+        "workout": [
+            "Consume smaller meals",
+            "Avoid trigger foods (spicy, fatty)",
+            "Eat high-fiber foods",
+            "Limit caffeine and alcohol",
+            "Chew food thoroughly",
+            "Avoid late-night eating",
+            "Consume non-citrus fruits",
+            "Include lean proteins",
+            "Stay hydrated",
+            "Avoid carbonated beverages"
+        ]
+    },
+    "chronic cholestasis": {
+        "diet": [
+            "Low-Fat Diet",
+            "High-Fiber Diet",
+            "Lean proteins",
+            "Whole grains",
+            "Fresh fruits and vegetables"
+        ],
+        "medication": [
+            "Ursodeoxycholic acid",
+            "Cholestyramine",
+            "Methotrexate",
+            "Corticosteroids",
+            "Liver transplant"
+        ],
+        "workout": [
+            "Consume a low-fat diet",
+            "Eat high-fiber foods",
+            "Include healthy fats",
+            "Limit alcohol consumption",
+            "Stay hydrated",
+            "Consume antioxidant-rich foods",
+            "Include omega-3 fatty acids",
+            "Include lean proteins",
+            "Limit processed foods",
+            "Avoid fried foods"
+        ]
+    },
+    "drug reaction": {
+        "diet": [
+            "Antihistamine Diet",
+            "Omega-3-rich foods",
+            "Vitamin C-rich foods",
+            "Quercetin-rich foods",
+            "Probiotics"
+        ],
+        "medication": [
+            "Antihistamines",
+            "Epinephrine",
+            "Corticosteroids",
+            "Antibiotics",
+            "Antifungal Cream"
+        ],
+        "workout": [
+            "Discontinue offending medication",
+            "Stay hydrated",
+            "Include anti-inflammatory foods",
+            "Consume antioxidants",
+            "Avoid trigger foods",
+            "Include omega-3 fatty acids",
+            "Limit caffeine and alcohol",
+            "Eat a balanced diet",
+            "Consult a healthcare professional"
+        ]
+    },
+    "peptic ulcer disease": {
+        "diet": [
+            "Low-Acid Diet",
+            "Fiber-rich foods",
+            "Ginger",
+            "Licorice",
+            "Aloe vera juice"
+        ],
+        "medication": [
+            "Antibiotics",
+            "Proton Pump Inhibitors (PPIs)",
+            "H2 Blockers",
+            "Antacids",
+            "Cytoprotective agents"
+        ],
+        "workout": [
+            "Consume smaller, more frequent meals",
+            "Avoid trigger foods (spicy, acidic)",
+            "Include high-fiber foods",
+            "Limit caffeine and alcohol",
+            "Stay hydrated",
+            "Consume probiotics",
+            "Include lean proteins",
+            "Include antioxidant-rich foods",
+            "Limit processed foods",
+            "Avoid smoking and alcohol"
+        ]
+    },
+    "aids": {
+        "diet": [
+            "Balanced Diet",
+            "Protein-rich foods",
+            "Fruits and vegetables",
+            "Whole grains",
+            "Healthy fats"
+        ],
+        "medication": [
+            "Antiretroviral drugs",
+            "Protease inhibitors",
+            "Integrase inhibitors",
+            "Entry inhibitors",
+            "Fusion inhibitors"
+        ],
+        "workout": [
+            "Follow a balanced and nutritious diet",
+            "Include lean proteins",
+            "Consume nutrient-rich foods",
+            "Stay hydrated",
+            "Include healthy fats",
+            "Avoid raw or undercooked foods",
+            "Limit sugary foods and beverages",
+            "Consume immune-boosting foods",
+            "Take prescribed supplements",
+            "Consult a healthcare professional"
+        ]
+    },
+    "diabetes": {
+        "diet": [
+            "Low-Glycemic Diet",
+            "Fiber-rich foods",
+            "Lean proteins",
+            "Healthy fats",
+            "Low-fat dairy"
+        ],
+        "medication": [
+            "Insulin",
+            "Metformin",
+            "Sulfonylureas",
+            "DPP-4 inhibitors",
+            "GLP-1 receptor agonists"
+        ],
+        "workout": [
+            "Monitor carbohydrate intake",
+            "Eat balanced meals",
+            "Include lean proteins",
+            "Consume high-fiber foods",
+            "Stay hydrated",
+            "Limit sugary foods and beverages",
+            "Include healthy fats",
+            "Monitor blood sugar levels",
+            "Consult a registered dietitian",
+            "Take prescribed medications as directed"
+        ]
+    },
+    "gastroenteritis": {
+        "diet": [
+            "Bland Diet",
+            "Bananas",
+            "Rice",
+            "Applesauce",
+            "Toast"
+        ],
+        "medication": [
+            "Antibiotics",
+            "Antiemetic drugs",
+            "Antidiarrheal drugs",
+            "IV fluids",
+            "Probiotics"
+        ],
+        "workout": [
+            "Stay hydrated",
+            "Consume clear fluids",
+            "Follow the BRAT diet (bananas, rice, applesauce, toast)",
+            "Include bland foods",
+            "Avoid fatty and greasy foods",
+            "Limit caffeine and alcohol",
+            "Avoid spicy foods",
+            "Consult a healthcare professional",
+            "Gradually reintroduce solid foods",
+            "Avoid dairy products"
+        ]
+    },
+    "bronchial asthma": {
+        "diet": [
+            "Anti-Inflammatory Diet",
+            "Omega-3-rich foods",
+            "Fruits and vegetables",
+            "Whole grains",
+            "Lean proteins"
+        ],
+        "medication": [
+            "Bronchodilators",
+            "Inhaled corticosteroids",
+            "Leukotriene modifiers",
+            "Mast cell stabilizers",
+            "Anticholinergics"
+        ],
+        "workout": [
+            "Include anti-inflammatory foods",
+            "Consume omega-3 fatty acids",
+            "Limit sodium intake",
+            "Stay hydrated",
+            "Include antioxidant-rich foods",
+            "Avoid sulfite-containing foods",
+            "Limit processed foods",
+            "Consume magnesium-rich foods",
+            "Consult a healthcare professional",
+            "Avoid trigger foods"
+        ]
+    },
+    "hypertension": {
+        "diet": [
+            "DASH Diet",
+            "Low-sodium foods",
+            "Fruits and vegetables",
+            "Whole grains",
+            "Lean proteins"
+        ],
+        "medication": [
+            "Antihypertensive medications",
+            "Diuretics",
+            "Beta-blockers",
+            "ACE inhibitors",
+            "Calcium channel blockers"
+        ],
+        "workout": [
+            "Follow the DASH diet (Dietary Approaches to Stop Hypertension)",
+            "Limit sodium intake",
+            "Include potassium-rich foods",
+            "Stay hydrated",
+            "Consume calcium-rich foods",
+            "Limit alcohol consumption",
+            "Include magnesium-rich foods",
+            "Consume omega-3 fatty acids",
+            "Limit processed foods",
+            "Consult a healthcare professional"
+        ]
+    },
+    "migraine": {
+        "diet": [
+            "Migraine Diet",
+            "Low-Tyramine Diet",
+            "Caffeine withdrawal",
+            "Hydration",
+            "Magnesium-rich foods"
+        ],
+        "medication": [
+            "Analgesics",
+            "Triptans",
+            "Ergotamine derivatives",
+            "Preventive medications",
+            "Biofeedback"
+        ],
+        "workout": [
+            "Identify and avoid trigger foods",
+            "Stay hydrated",
+            "Include magnesium-rich foods",
+            "Consume omega-3 fatty acids",
+            "Limit caffeine and alcohol",
+            "Consume riboflavin-rich foods",
+            "Limit processed foods",
+            "Maintain regular meal times",
+            "Consult a healthcare professional",
+            "Manage stress"
+        ]
+    },
+    "cervical spondylosis": {
+        "diet": [
+            "Arthritis Diet",
+            "Anti-Inflammatory Diet",
+            "Omega-3-rich foods",
+            "Fruits and vegetables",
+            "Whole grains"
+        ],
+        "medication": [
+            "Pain relievers",
+            "Muscle relaxants",
+            "Physical therapy",
+            "Neck braces",
+            "Corticosteroids"
+        ],
+        "workout": [
+            "Include anti-inflammatory foods",
+            "Consume omega-3 fatty acids",
+            "Include vitamin D-rich foods",
+            "Stay hydrated",
+            "Consume antioxidant-rich foods",
+            "Limit processed foods",
+            "Include lean proteins",
+            "Practice good posture",
+            "Consult a healthcare professional",
+            "Engage in regular exercise"
+        ]
+    },
+    "paralysis (brain hemorrhage)": {
+        "diet": [
+            "Heart-Healthy Diet",
+            "Low-sodium foods",
+            "Fruits and vegetables",
+            "Whole grains",
+            "Lean proteins"
+        ],
+        "medication": [
+            "Blood thinners",
+            "Clot-dissolving medications",
+            "Anticonvulsants",
+            "Physical therapy",
+            "Occupational therapy"
+        ],
+        "workout": [
+            "Follow a balanced and nutritious diet",
+            "Include lean proteins",
+            "Consume nutrient-rich foods",
+            "Stay hydrated",
+            "Include healthy fats",
+            "Limit sugary foods and beverages",
+            "Include antioxidants",
+            "Consume foods rich in vitamin K",
+            "Consult a healthcare professional",
+            "Manage stress"
+        ]
+    },
+    "jaundice": {
+        "diet": [
+            "Liver-Healthy Diet",
+            "Low-fat Diet",
+            "Fruits and vegetables",
+            "Whole grains",
+            "Lean proteins"
+        ],
+        "medication": [
+            "IV fluids",
+            "Blood transfusions",
+            "Liver transplant",
+            "Medications for itching",
+            "Antiviral medications"
+        ],
+        "workout": [
+            "Stay hydrated",
+            "Consume nutrient-rich foods",
+            "Include protein-rich foods",
+            "Consume easily digestible foods",
+            "Limit fatty foods",
+            "Avoid alcohol and caffeine",
+            "Include vitamin C-rich foods",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet"
+        ]
+    },
+    "malaria": {
+        "diet": [
+            "Malaria Diet",
+            "Hydration",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Oral rehydration solutions"
+        ],
+        "medication": [
+            "Antimalarial drugs",
+            "Antipyretics",
+            "Antiemetic drugs",
+            "IV fluids",
+            "Blood transfusions"
+        ],
+        "workout": [
+            "Stay hydrated",
+            "Consume nutrient-rich foods",
+            "Include protein-rich foods",
+            "Consume foods rich in antioxidants",
+            "Limit fatty and greasy foods",
+            "Avoid alcohol and caffeine",
+            "Include vitamin C-rich foods",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet"
+        ]
+    },
+    "chicken pox": {
+        "diet": [
+            "Chicken Pox Diet",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Hydration",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Antiviral drugs",
+            "Pain relievers",
+            "IV fluids",
+            "Blood transfusions",
+            "Platelet transfusions"
+        ],
+        "workout": [
+            "Stay hydrated",
+            "Include easily digestible foods",
+            "Include vitamin C-rich foods",
+            "Consume protein-rich foods",
+            "Include zinc-rich foods",
+            "Avoid spicy and acidic foods",
+            "Consult a healthcare professional",
+            "Practice good hygiene",
+            "Rest and conserve energy",
+            "Gradually resume normal diet"
+        ]
+    },
+    "dengue": {
+        "diet": [
+            "Dengue Diet",
+            "Hydration",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Antibiotics",
+            "Antipyretics",
+            "Analgesics",
+            "IV fluids",
+            "Corticosteroids"
+        ],
+        "workout": [
+            "Stay hydrated",
+            "Include nutrient-rich foods",
+            "Consume foods rich in vitamin C and antioxidants",
+            "Limit fatty and greasy foods",
+            "Avoid caffeine and alcohol",
+            "Include soft and easily digestible foods",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet",
+            "Follow medical recommendations"
+        ]
+    },
+    "typhoid": {
+        "diet": [
+            "Typhoid Diet",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Hydration",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Vaccination",
+            "Antiviral drugs",
+            "IV fluids",
+            "Blood transfusions",
+            "Liver transplant"
+        ],
+        "workout": [
+            "Consume easily digestible foods",
+            "Stay hydrated",
+            "Include nutrient-rich foods",
+            "Consume foods rich in vitamin C and antioxidants",
+            "Include protein-rich foods",
+            "Avoid fatty and greasy foods",
+            "Consult a healthcare professional",
+            "Gradually resume normal diet",
+            "Follow medical recommendations",
+            "Avoid alcohol and caffeine"
+        ]
+    },
+    "hepatitis a": {
+        "diet": [
+            "Hepatitis A Diet",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Hydration",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Vaccination",
+            "Antiviral drugs",
+            "IV fluids",
+            "Blood transfusions",
+            "Liver transplant"
+        ],
+        "workout": [
+            "Stay hydrated",
+            "Consume nutrient-rich foods",
+            "Include protein-rich foods",
+            "Consume easily digestible foods",
+            "Limit fatty foods",
+            "Avoid alcohol and caffeine",
+            "Include vitamin C-rich foods",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet"
+        ]
+    },
+    "hepatitis b": {
+        "diet": [
+            "Hepatitis B Diet",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Hydration",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Antiviral drugs",
+            "IV fluids",
+            "Blood transfusions",
+            "Platelet transfusions",
+            "Liver transplant"
+        ],
+        "workout": [
+            "Follow a balanced and nutritious diet",
+            "Stay hydrated",
+            "Include protein-rich foods",
+            "Consume nutrient-rich foods",
+            "Limit fatty foods",
+            "Avoid alcohol and caffeine",
+            "Include vitamin C-rich foods",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet"
+        ]
+    },
+    "hepatitis c": {
+        "diet": [
+            "Hepatitis C Diet",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Hydration",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Antiviral drugs",
+            "IV fluids",
+            "Blood transfusions",
+            "Platelet transfusions",
+            "Liver transplant"
+        ],
+        "workout": [
+            "Follow a balanced and nutritious diet",
+            "Stay hydrated",
+            "Include protein-rich foods",
+            "Consume nutrient-rich foods",
+            "Limit fatty foods",
+            "Avoid alcohol and caffeine",
+            "Include vitamin C-rich foods",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet"
+        ]
+    },
+    "hepatitis d": {
+        "diet": [
+            "Hepatitis D Diet",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Hydration",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Antiviral drugs",
+            "IV fluids",
+            "Blood transfusions",
+            "Platelet transfusions",
+            "Liver transplant"
+        ],
+        "workout": [
+            "Follow a balanced and nutritious diet",
+            "Stay hydrated",
+            "Include protein-rich foods",
+            "Consume nutrient-rich foods",
+            "Limit fatty foods",
+            "Avoid alcohol and caffeine",
+            "Include vitamin C-rich foods",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet"
+        ]
+    },
+    "hepatitis e": {
+        "diet": [
+            "Hepatitis E Diet",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Hydration",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Alcohol cessation",
+            "Corticosteroids",
+            "IV fluids",
+            "Liver transplant",
+            "Nutritional support"
+        ],
+        "workout": [
+            "Stay hydrated",
+            "Consume nutrient-rich foods",
+            "Include protein-rich foods",
+            "Consume easily digestible foods",
+            "Limit fatty foods",
+            "Avoid alcohol and caffeine",
+            "Include vitamin C-rich foods",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet"
+        ]
+    },
+    "alcoholic hepatitis": {
+        "diet": [
+            "Liver-Healthy Diet",
+            "Low-fat Diet",
+            "Fruits and vegetables",
+            "Whole grains",
+            "Lean proteins"
+        ],
+        "medication": [
+            "Antibiotics",
+            "Isoniazid",
+            "Rifampin",
+            "Ethambutol",
+            "Pyrazinamide"
+        ],
+        "workout": [
+            "Avoid alcohol consumption",
+            "Follow a balanced and nutritious diet",
+            "Stay hydrated",
+            "Consume nutrient-rich foods",
+            "Include protein-rich foods",
+            "Limit fatty foods",
+            "Include antioxidants",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet"
+        ]
+    },
+    "tuberculosis": {
+        "diet": [
+            "TB Diet",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Hydration",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Antipyretics",
+            "Decongestants",
+            "Cough suppressants",
+            "Antihistamines",
+            "Pain relievers"
+        ],
+        "workout": [
+            "Consume a high-protein diet",
+            "Include nutrient-rich foods",
+            "Stay hydrated",
+            "Consume foods rich in vitamins A and C",
+            "Include zinc-rich foods",
+            "Limit sugary foods and beverages",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet",
+            "Follow medical recommendations"
+        ]
+    },
+    "common cold": {
+        "diet": [
+            "Cold Diet",
+            "Hydration",
+            "Warm fluids",
+            "Rest",
+            "Honey and lemon tea"
+        ],
+        "medication": [
+            "Antibiotics",
+            "Antiviral drugs",
+            "Antifungal drugs",
+            "IV fluids",
+            "Oxygen therapy"
+        ],
+        "workout": [
+            "Stay hydrated",
+            "Include nutrient-rich foods",
+            "Consume foods rich in vitamin C and antioxidants",
+            "Include zinc-rich foods",
+            "Limit sugary foods and beverages",
+            "Consume chicken soup",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet",
+            "Follow medical recommendations"
+        ]
+    },
+    "pneumonia": {
+        "diet": [
+            "Pneumonia Diet",
+            "High-Calorie Diet",
+            "Soft and bland foods",
+            "Hydration",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Laxatives",
+            "Pain relievers",
+            "Warm baths",
+            "Cold compresses",
+            "High-fiber diet"
+        ],
+        "workout": [
+            "Stay hydrated",
+            "Include nutrient-rich foods",
+            "Consume foods rich in vitamin C and antioxidants",
+            "Include zinc-rich foods",
+            "Limit sugary foods and beverages",
+            "Consume chicken soup",
+            "Consult a healthcare professional",
+            "Rest and conserve energy",
+            "Gradually resume normal diet",
+            "Follow medical recommendations"
+        ]
+    },
+    "dimorphic hemmorhoids(piles)": {
+        "diet": [
+            "Hemorrhoids Diet",
+            "High-Fiber Diet",
+            "Hydration",
+            "Warm baths",
+            "Stool softeners"
+        ],
+        "medication": [
+            "Nitroglycerin",
+            "Aspirin",
+            "Beta-blockers",
+            "Calcium channel blockers",
+            "Thrombolytic drugs"
+        ],
+        "workout": [
+            "Consume high-fiber foods",
+            "Stay hydrated",
+            "Include nutrient-rich foods",
+            "Consume foods rich in flavonoids",
+            "Limit processed foods",
+            "Avoid spicy and greasy foods",
+            "Consult a healthcare professional",
+            "Practice good hygiene",
+            "Gradually resume normal diet",
+            "Follow medical recommendations"
+        ]
+    },
+    "heart attack": {
+        "diet": [
+            "Heart-Healthy Diet",
+            "Low-sodium foods",
+            "Fruits and vegetables",
+            "Whole grains",
+            "Lean proteins"
+        ],
+        "medication": [
+            "Compression stockings",
+            "Exercise",
+            "Elevating the legs",
+            "Sclerotherapy",
+            "Laser treatments"
+        ],
+        "workout": [
+            "Follow a heart-healthy diet",
+            "Limit sodium intake",
+            "Include fiber-rich foods",
+            "Consume healthy fats",
+            "Include lean proteins",
+            "Limit sugary foods and beverages",
+            "Stay hydrated",
+            "Consult a healthcare professional",
+            "Follow medical recommendations",
+            "Engage in regular exercise"
+        ]
+    },
+    "varicose veins": {
+        "diet": [
+            "Varicose Veins Diet",
+            "High-Fiber Diet",
+            "Fruits and vegetables",
+            "Whole grains",
+            "Low-sodium foods"
+        ],
+        "medication": [
+            "Levothyroxine",
+            "Antithyroid medications",
+            "Beta-blockers",
+            "Radioactive iodine",
+            "Thyroid surgery"
+        ],
+        "workout": [
+            "Consume a high-fiber diet",
+            "Stay hydrated",
+            "Include nutrient-rich foods",
+            "Consume foods rich in antioxidants",
+            "Limit sodium intake",
+            "Include flavonoid-rich foods",
+            "Avoid standing or sitting for long periods",
+            "Consult a healthcare professional",
+            "Follow medical recommendations",
+            "Engage in regular exercise"
+        ]
+    },
+    "hypothyroidism": {
+        "diet": [
+            "Hypothyroidism Diet",
+            "Iodine-rich foods",
+            "Selenium-rich foods",
+            "Fruits and vegetables",
+            "Whole grains"
+        ],
+        "medication": [
+            "Antithyroid medications",
+            "Radioactive iodine",
+            "Thyroid surgery",
+            "Beta-blockers",
+            "Corticosteroids"
+        ],
+        "workout": [
+            "Include iodine-rich foods",
+            "Consume selenium-rich foods",
+            "Stay hydrated",
+            "Include nutrient-rich foods",
+            "Limit processed foods",
+            "Consume foods rich in vitamins B and D",
+            "Consult a healthcare professional",
+            "Follow medical recommendations",
+            "Maintain a stable weight",
+            "Engage in regular exercise"
+        ]
+    },
+    "hyperthyroidism": {
+        "diet": [
+            "Hyperthyroidism Diet",
+            "Low-Iodine Diet",
+            "Calcium-rich foods",
+            "Selenium-rich foods",
+            "Fruits and vegetables"
+        ],
+        "medication": [
+            "Glucose tablets",
+            "Candy or juice",
+            "Glucagon injection",
+            "IV dextrose",
+            "Diazoxide"
+        ],
+        "workout": [
+            "Limit iodine intake",
+            "Consume cruciferous vegetables in moderation",
+            "Stay hydrated",
+            "Include nutrient-rich foods",
+            "Limit caffeine and alcohol",
+            "Include omega-3 fatty acids",
+            "Consult a healthcare professional",
+            "Follow medical recommendations",
+            "Maintain a stable weight",
+            "Engage in regular exercise"
+        ]
+    },
+    "hypoglycemia": {
+        "diet": [
+            "Hypoglycemia Diet",
+            "Complex carbohydrates",
+            "Protein-rich snacks",
+            "Fiber-rich foods",
+            "Healthy fats"
+        ],
+        "medication": [
+            "Pain relievers",
+            "Exercise",
+            "Hot and cold packs",
+            "Joint protection",
+            "Physical therapy"
+        ],
+        "workout": [
+            "Consume complex carbohydrates",
+            "Include protein-rich foods",
+            "Stay hydrated",
+            "Limit sugary foods and beverages",
+            "Consume regular meals and snacks",
+            "Consult a healthcare professional",
+            "Monitor blood sugar levels",
+            "Follow medical recommendations",
+            "Engage in regular physical activity",
+            "Limit alcohol intake"
+        ]
+    },
+    "osteoarthristis": {
+        "diet": [
+            "Arthritis Diet",
+            "Anti-Inflammatory Diet",
+            "Omega-3-rich foods",
+            "Fruits and vegetables",
+            "Whole grains"
+        ],
+        "medication": [
+            "NSAIDs",
+            "Disease-modifying antirheumatic drugs (DMARDs)",
+            "Biologics",
+            "Corticosteroids",
+            "Joint replacement surgery"
+        ],
+        "workout": [
+            "Consume anti-inflammatory foods",
+            "Include omega-3 fatty acids",
+            "Consume antioxidant-rich foods",
+            "Stay hydrated",
+            "Limit processed foods",
+            "Include vitamin K-rich foods",
+            "Consult a healthcare professional",
+            "Follow medical recommendations",
+            "Engage in low-impact exercise",
+            "Maintain a healthy weight"
+        ]
+    },
+    "arthritis": {
+        "diet": [
+            "Arthritis Diet",
+            "Anti-Inflammatory Diet",
+            "Omega-3-rich foods",
+            "Fruits and vegetables",
+            "Whole grains"
+        ],
+        "medication": [
+            "Vestibular rehabilitation",
+            "Canalith repositioning",
+            "Medications for nausea",
+            "Surgery",
+            "Home exercises"
+        ],
+        "workout": [
+            "Consume anti-inflammatory foods",
+            "Include omega-3 fatty acids",
+            "Consume antioxidant-rich foods",
+            "Stay hydrated",
+            "Limit processed foods",
+            "Include vitamin K-rich foods",
+            "Consult a healthcare professional",
+            "Follow medical recommendations",
+            "Engage in low-impact exercise",
+            "Maintain a healthy weight"
+        ]
+    },
+    "(vertigo) paroymsal positional vertigo": {
+        "diet": [
+            "Vertigo Diet",
+            "Low-Salt Diet",
+            "Hydration",
+            "Ginger tea",
+            "Vitamin D-rich foods"
+        ],
+        "medication": [
+            "Topical treatments",
+            "Antibiotics",
+            "Oral medications",
+            "Hormonal treatments",
+            "Isotretinoin"
+        ],
+        "workout": []
+    },
+    "acne": {
+        "diet": [
+            "Acne Diet",
+            "Low-Glycemic Diet",
+            "Hydration",
+            "Fruits and vegetables",
+            "Probiotics"
+        ],
+        "medication": [
+            "Antibiotics",
+            "Pain relievers",
+            "Antihistamines",
+            "Corticosteroids",
+            "Topical treatments"
+        ],
+        "workout": [
+            "Consume a balanced diet",
+            "Limit dairy and high-glycemic foods",
+            "Include antioxidants",
+            "Stay hydrated",
+            "Limit processed foods",
+            "Include zinc-rich foods",
+            "Consult a skincare professional",
+            "Practice good skincare hygiene",
+            "Limit sugary foods and beverages",
+            "Follow medical recommendations"
+        ]
+    },
+    "urinary tract infection": {
+        "diet": [
+            "UTI Diet",
+            "Hydration",
+            "Cranberry juice",
+            "Probiotics",
+            "Vitamin C-rich foods"
+        ],
+        "medication": [
+            "Antibiotics",
+            "Urinary analgesics",
+            "Phenazopyridine",
+            "Antispasmodics",
+            "Probiotics"
+        ],
+        "workout": [
+            "Stay hydrated",
+            "Consume cranberry products",
+            "Include vitamin C-rich foods",
+            "Limit caffeine and alcohol",
+            "Consume probiotics",
+            "Avoid spicy and acidic foods",
+            "Consult a healthcare professional",
+            "Follow medical recommendations",
+            "Maintain good hygiene",
+            "Limit sugary foods and beverages"
+        ]
+    },
+    "psoriasis": {
+        "diet": [
+            "Psoriasis Diet",
+            "Anti-Inflammatory Diet",
+            "Omega-3-rich foods",
+            "Fruits and vegetables",
+            "Whole grains"
+        ],
+        "medication": [
+            "Topical treatments",
+            "Phototherapy",
+            "Systemic medications",
+            "Biologics",
+            "Coal tar"
+        ],
+        "workout": [
+            "Consume anti-inflammatory foods",
+            "Include omega-3 fatty acids",
+            "Include vitamin D analogues",
+            "Limit alcohol consumption",
+            "Stay hydrated",
+            "Consult a healthcare professional",
+            "Limit processed foods",
+            "Follow medical recommendations",
+            "Manage stress",
+            "Consider phototherapy under medical guidance"
+        ]
+    },
+    "impetigo": {
+        "diet": [
+            "Impetigo Diet",
+            "Antibiotic treatment",
+            "Fruits and vegetables",
+            "Hydration",
+            "Protein-rich foods"
+        ],
+        "medication": [
+            "Topical antibiotics",
+            "Oral antibiotics",
+            "Antiseptics",
+            "Ointments",
+            "Warm compresses"
+        ],
+        "workout": [
+            "Maintain good hygiene",
+            "Stay hydrated",
+            "Consume nutrient-rich foods",
+            "Limit sugary foods and beverages",
+            "Include foods rich in vitamin C",
+            "Consult a healthcare professional",
+            "Follow medical recommendations",
+            "Avoid scratching",
+            "Take prescribed antibiotics",
+            "Practice wound care"
+        ]
+    },
+    "(vertigo) paroymsal  positional vertigo": {
+        "diet": [],
+        "medication": [],
+        "workout": [
+            "Avoid trigger foods (caffeine, alcohol)",
+            "Limit sodium intake",
+            "Stay hydrated",
+            "Consume ginger and ginkgo biloba",
+            "Limit artificial sweeteners",
+            "Consult a healthcare professional",
+            "Avoid sudden head movements",
+            "Follow medical recommendations",
+            "Manage stress",
+            "Limit caffeine and stimulants"
+        ]
+    }
+}

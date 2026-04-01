@@ -1,0 +1,434 @@
+{
+    "(vertigo) Paroymsal  Positional Vertigo": {
+        "prevention": [
+            "Consult a ent specialist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "ENT Specialist",
+            "Neurologist"
+        ]
+    },
+    "AIDS": {
+        "prevention": [
+            "Consult a infectious disease specialist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Infectious Disease Specialist"
+        ]
+    },
+    "Acne": {
+        "prevention": [
+            "Consult a dermatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Dermatologist"
+        ]
+    },
+    "Alcoholic hepatitis": {
+        "prevention": [
+            "Consult a hepatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Hepatologist",
+            "Gastroenterologist"
+        ]
+    },
+    "Allergy": {
+        "prevention": [
+            "Consult a allergist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Allergist",
+            "Immunologist"
+        ]
+    },
+    "Arthritis": {
+        "prevention": [
+            "Consult a rheumatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Rheumatologist"
+        ]
+    },
+    "Bronchial Asthma": {
+        "prevention": [
+            "Consult a pulmonologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Pulmonologist"
+        ]
+    },
+    "Cervical spondylosis": {
+        "prevention": [
+            "Consult a orthopedist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Orthopedist"
+        ]
+    },
+    "Chicken pox": {
+        "prevention": [
+            "Consult a pediatrician immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Pediatrician",
+            "General Physician"
+        ]
+    },
+    "Chronic cholestasis": {
+        "prevention": [
+            "Consult a hepatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Hepatologist",
+            "Gastroenterologist"
+        ]
+    },
+    "Common Cold": {
+        "prevention": [
+            "Consult a general physician immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "General Physician"
+        ]
+    },
+    "Dengue": {
+        "prevention": [
+            "Consult a infectious disease specialist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Infectious Disease Specialist",
+            "General Physician"
+        ]
+    },
+    "Diabetes": {
+        "prevention": [
+            "Consult a endocrinologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Endocrinologist"
+        ]
+    },
+    "Dimorphic hemmorhoids(piles)": {
+        "prevention": [
+            "Consult a proctologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Proctologist",
+            "Gastroenterologist"
+        ]
+    },
+    "Drug Reaction": {
+        "prevention": [
+            "Consult a allergist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Allergist",
+            "Dermatologist"
+        ]
+    },
+    "Fungal infection": {
+        "prevention": [
+            "Consult a dermatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Dermatologist"
+        ]
+    },
+    "GERD": {
+        "prevention": [
+            "Consult a gastroenterologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Gastroenterologist"
+        ]
+    },
+    "Gastroenteritis": {
+        "prevention": [
+            "Consult a gastroenterologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Gastroenterologist"
+        ]
+    },
+    "Heart attack": {
+        "prevention": [
+            "Consult a cardiologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Cardiologist",
+            "Emergency Medicine"
+        ]
+    },
+    "Hepatitis B": {
+        "prevention": [
+            "Consult a hepatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Hepatologist",
+            "Gastroenterologist"
+        ]
+    },
+    "Hepatitis C": {
+        "prevention": [
+            "Consult a hepatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Hepatologist",
+            "Gastroenterologist"
+        ]
+    },
+    "Hepatitis D": {
+        "prevention": [
+            "Consult a hepatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Hepatologist",
+            "Gastroenterologist"
+        ]
+    },
+    "Hepatitis E": {
+        "prevention": [
+            "Consult a hepatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Hepatologist",
+            "Gastroenterologist"
+        ]
+    },
+    "Hypertension": {
+        "prevention": [
+            "Consult a cardiologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Cardiologist"
+        ]
+    },
+    "Hyperthyroidism": {
+        "prevention": [
+            "Consult a endocrinologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Endocrinologist"
+        ]
+    },
+    "Hypoglycemia": {
+        "prevention": [
+            "Consult a endocrinologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Endocrinologist"
+        ]
+    },
+    "Hypothyroidism": {
+        "prevention": [
+            "Consult a endocrinologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Endocrinologist"
+        ]
+    },
+    "Impetigo": {
+        "prevention": [
+            "Consult a dermatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Dermatologist",
+            "Pediatrician"
+        ]
+    },
+    "Jaundice": {
+        "prevention": [
+            "Consult a hepatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Hepatologist",
+            "Gastroenterologist"
+        ]
+    },
+    "Malaria": {
+        "prevention": [
+            "Consult a infectious disease specialist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Infectious Disease Specialist",
+            "General Physician"
+        ]
+    },
+    "Migraine": {
+        "prevention": [
+            "Consult a neurologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Neurologist"
+        ]
+    },
+    "Osteoarthristis": {
+        "prevention": [
+            "Consult a rheumatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Rheumatologist",
+            "Orthopedist"
+        ]
+    },
+    "Paralysis (brain hemorrhage)": {
+        "prevention": [
+            "Consult a neurologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Neurologist"
+        ]
+    },
+    "Peptic ulcer diseae": {
+        "prevention": [
+            "Consult a gastroenterologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Gastroenterologist"
+        ]
+    },
+    "Pneumonia": {
+        "prevention": [
+            "Consult a pulmonologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Pulmonologist",
+            "General Physician"
+        ]
+    },
+    "Psoriasis": {
+        "prevention": [
+            "Consult a dermatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Dermatologist"
+        ]
+    },
+    "Tuberculosis": {
+        "prevention": [
+            "Consult a pulmonologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Pulmonologist",
+            "Infectious Disease Specialist"
+        ]
+    },
+    "Typhoid": {
+        "prevention": [
+            "Consult a infectious disease specialist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Infectious Disease Specialist",
+            "General Physician"
+        ]
+    },
+    "Urinary tract infection": {
+        "prevention": [
+            "Consult a urologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Urologist",
+            "Gynecologist"
+        ]
+    },
+    "Varicose veins": {
+        "prevention": [
+            "Consult a vascular surgeon immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Vascular Surgeon"
+        ]
+    },
+    "hepatitis A": {
+        "prevention": [
+            "Consult a hepatologist immediately.",
+            "Maintain a healthy lifestyle and diet.",
+            "Track your symptoms and report changes to your doctor."
+        ],
+        "doctors": [
+            "Hepatologist",
+            "Gastroenterologist"
+        ]
+    }
+}

@@ -1,0 +1,122 @@
+import os
+from io import BytesIO
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from datetime import datetime
+
+def generate_health_report(user, vitals, risk_score) -> BytesIO:
+    """
+    Generates a PDF Health Report containing user info, recent vitals, and ML predictions.
+    Returns a BytesIO stream of the PDF.
+    """
+    pdf_buffer = BytesIO()
+    doc = SimpleDocTemplate(pdf_buffer, pagesize=letter, rightMargin=40, leftMargin=40, topMargin=50, bottomMargin=50)
+    story = []
+
+    # Styling
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        name='TitleStyle',
+        parent=styles['Heading1'],
+        fontSize=24,
+        textColor=colors.HexColor('#0ea5e9'), # PreventX Primary
+        spaceAfter=20,
+        alignment=1 # Center
+    )
+    h2_style = ParagraphStyle(
+        name='H2Style',
+        parent=styles['Heading2'],
+        fontSize=16,
+        textColor=colors.darkgray,
+        spaceAfter=10
+    )
+    body_style = styles['Normal']
+
+    # Header
+    story.append(Paragraph("PreventX Complete Health Report", title_style))
+    story.append(Paragraph(f"Date Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}", body_style))
+    story.append(Spacer(1, 20))
+
+    # Profile Section
+    story.append(Paragraph("Patient Profile", h2_style))
+    profile_data = [
+        ["Name", user.name],
+        ["Email", user.email],
+        ["Age", str(user.age) + " Years" if user.age else "Not provided"],
+        ["Gender", user.gender.capitalize() if user.gender else "Not provided"],
+        ["Height", str(user.height) + " cm" if user.height else "Not provided"],
+        ["Weight", str(user.weight) + " kg" if user.weight else "Not provided"],
+        ["Pre-existing Condition", user.pre_existing_condition if user.pre_existing_condition else "None"]
+    ]
+    t = Table(profile_data, colWidths=[150, 250])
+    t.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (0,-1), colors.HexColor('#f1f5f9')),
+        ('TEXTCOLOR', (0,0), (-1,-1), colors.HexColor('#0f172a')),
+        ('ALIGN', (0,0), (-1,-1), 'LEFT'),
+        ('FONTNAME', (0,0), (0,-1), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
+        ('TOPPADDING', (0,0), (-1,-1), 8),
+        ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor('#cbd5e1'))
+    ]))
+    story.append(t)
+    story.append(Spacer(1, 25))
+
+    # ML Assessment Section
+    story.append(Paragraph("AI Clinical Assessment", h2_style))
+    risk_level = "Low Risk" if risk_score < 30 else "Moderate Risk" if risk_score < 60 else "High Risk"
+    risk_color = colors.HexColor('#22c55e') if risk_score < 30 else colors.HexColor('#f59e0b') if risk_score < 60 else colors.HexColor('#ef4444')
+    
+    assessment_data = [
+        ["PreventX ML Risk Score", str(risk_score) + " / 100"],
+        ["Risk Tier", risk_level]
+    ]
+    t2 = Table(assessment_data, colWidths=[200, 200])
+    t2.setStyle(TableStyle([
+        ('FONTNAME', (0,0), (0,-1), 'Helvetica-Bold'),
+        ('FONTSIZE', (1,0), (1,-1), 14),
+        ('TEXTCOLOR', (1,1), (1,1), risk_color),
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.HexColor('#e2e8f0')),
+        ('PADDING', (0,0), (-1,-1), 10)
+    ]))
+    story.append(t2)
+    story.append(Spacer(1, 20))
+
+    # Vitals Log (Last 7)
+    story.append(Paragraph("Recent Vitals History", h2_style))
+    if not vitals:
+        story.append(Paragraph("No vitals data explicitly logged by the patient.", body_style))
+    else:
+        vitals_headers = ["Date", "Blood Pressure", "Heart Rate (bpm)", "Blood Sugar", "BMI"]
+        vitals_rows = [vitals_headers]
+        
+        # Sort and take last 10
+        sorted_vitals = sorted(vitals, key=lambda x: x.timestamp, reverse=True)[:10]
+        
+        for v in sorted_vitals:
+            bp = f"{v.blood_pressure_sys}/{v.blood_pressure_dia}" if v.blood_pressure_sys else "N/A"
+            hr = str(v.heart_rate) if v.heart_rate else "N/A"
+            sugar = str(v.blood_sugar) if v.blood_sugar else "N/A"
+            bmi = str(v.bmi) if v.bmi else "N/A"
+            date_str = v.timestamp.strftime('%Y-%m-%d %H:%M') if v.timestamp else "Unknown"
+            vitals_rows.append([date_str, bp, hr, sugar, bmi])
+            
+        t3 = Table(vitals_rows, colWidths=[120, 80, 100, 80, 50])
+        t3.setStyle(TableStyle([
+            ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#0ea5e9')),
+            ('TEXTCOLOR', (0,0), (-1,0), colors.whitesmoke),
+            ('ALIGN', (0,0), (-1,-1), 'CENTER'),
+            ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
+            ('BOTTOMPADDING', (0,0), (-1,0), 12),
+            ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor('#cbd5e1'))
+        ]))
+        story.append(t3)
+    
+    story.append(Spacer(1, 30))
+    story.append(Paragraph("Note: This document is strictly generated by PreventX ML modeling and does not serve as a professional clinical diagnosis.", ParagraphStyle(name='Footer', parent=styles['Italic'], fontSize=8, textColor=colors.gray)))
+
+    # Build
+    doc.build(story)
+    pdf_buffer.seek(0)
+    return pdf_buffer

@@ -1,0 +1,37 @@
+{
+    "gender": [
+        "Female",
+        "Male",
+        "Other"
+    ],
+    "condition": [
+        "Arthritis",
+        "Asthma",
+        "Diabetes",
+        "Heart Disease",
+        "Hypertension",
+        "None",
+        "Obesity"
+    ],
+    "target_calories": [
+        "1500-1800",
+        "1800-2200",
+        "2200-2600"
+    ],
+    "target_macros": [
+        "Balanced (50c/25p/25f)",
+        "High Protein/Low Carb (30c/40p/30f)",
+        "Low Carb (40c/30p/30f)"
+    ],
+    "target_workout": [
+        "HIIT & Weight Training",
+        "Low-Impact Cardio & Swimming",
+        "Walking & Water Aerobics",
+        "Yoga & Light Resistance"
+    ],
+    "target_intensity": [
+        "High",
+        "Low",
+        "Moderate"
+    ]
+}
