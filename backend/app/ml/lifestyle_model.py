@@ -1,3 +1,5 @@
+"""Lifestyle prediction model for generating personalized health plans."""
+
 import os
 import joblib
 import pandas as pd
@@ -24,13 +26,13 @@ def predict_lifestyle_plan(age, gender, height_cm, weight_kg, condition):
     # Process inputs based on LabelEncoders
     try:
         gender_encoded = encoders['gender'].transform([gender])[0]
-    except:
-        gender_encoded = encoders['gender'].transform(['Male'])[0] # fallback
+    except (ValueError, KeyError):
+        gender_encoded = encoders['gender'].transform(['Male'])[0]  # fallback
 
     try:
         condition_encoded = encoders['condition'].transform([condition])[0]
-    except:
-        condition_encoded = encoders['condition'].transform(['None'])[0] # fallback
+    except (ValueError, KeyError):
+        condition_encoded = encoders['condition'].transform(['None'])[0]  # fallback
 
     # Prepare DataFrame exactly as trained
     input_data = pd.DataFrame([{
