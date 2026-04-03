@@ -37,7 +37,7 @@ services:
   # 3. React/Vite Frontend (Served via Nginx)
   frontend:
     build:
-      context: ./wellness-loom-ai
+      context: ./frontend
       dockerfile: Dockerfile
     container_name: preventx-frontend
     restart: always
