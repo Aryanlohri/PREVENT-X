@@ -1,47 +1,102 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Brain, X, Minus, Send, Smile } from "lucide-react";
+import { Brain, X, Minus, Send, Loader2 } from "lucide-react";
+import { sendChatMessage, fetchQuickQuestions, isAuthenticated } from "@/lib/api";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
-const quickChips = ["I'm feeling stressed", "Breathing exercise", "Motivate me", "Sleep tips"];
-
-const mockResponses: Record<string, string> = {
-  "I'm feeling stressed": "I hear you. Stress is your body's signal to pause. Let's try a quick technique: breathe in for 4 counts, hold for 4, exhale for 6. Repeat 3 times. You've got this! 💪",
-  "Breathing exercise": "Let's do a calming box breath together:\n\n🫁 **Inhale** for 4 seconds\n⏸️ **Hold** for 4 seconds\n😮‍💨 **Exhale** for 4 seconds\n⏸️ **Hold** for 4 seconds\n\nRepeat 4 times. Notice how your body relaxes with each cycle.",
-  "Motivate me": "Remember: every small healthy choice you make today compounds into a healthier tomorrow. You're already here, tracking your health — that puts you ahead of 90% of people. Keep going! 🌟",
-  "Sleep tips": "Here are 3 science-backed sleep tips:\n\n1. 🌙 **No screens** 30 min before bed\n2. 🧊 Keep your room **cool** (65-68°F)\n3. ☕ **No caffeine** after 2 PM\n\nConsistency is key — try going to bed at the same time each night.",
-};
-
 export const AICompanion = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Hi there! 👋 I'm your PreventX Mind Companion. I'm here to support your mental wellness. How are you feeling today?" },
+    { role: "assistant", content: "Hi there! 👋 I'm your PreventX AI Companion. I can help with health questions, diet advice, stress management, and more. How can I help you today?" },
   ]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
+  const [quickChips, setQuickChips] = useState<string[]>([]);
+  const [chipsLoading, setChipsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Auto-scroll to bottom when messages change
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, typing]);
 
-  const send = (text: string) => {
-    if (!text.trim()) return;
+  // Fetch quick questions from backend when companion opens
+  useEffect(() => {
+    if (isOpen && quickChips.length === 0 && isAuthenticated()) {
+      loadQuickQuestions();
+    }
+  }, [isOpen]);
+
+  const loadQuickQuestions = async () => {
+    setChipsLoading(true);
+    try {
+      const data = await fetchQuickQuestions();
+      setQuickChips(data.questions);
+    } catch {
+      // Fallback to sensible defaults if backend is unreachable
+      setQuickChips([
+        "What should I eat for diabetes?",
+        "How to relieve stress?",
+        "How do I log my vitals?",
+        "What is normal blood pressure?",
+      ]);
+    } finally {
+      setChipsLoading(false);
+    }
+  };
+
+  const send = async (text: string) => {
+    if (!text.trim() || typing) return;
+
     const userMsg: Message = { role: "user", content: text.trim() };
-    setMessages((prev) => [...prev, userMsg]);
+    const updatedMessages = [...messages, userMsg];
+    setMessages(updatedMessages);
     setInput("");
     setTyping(true);
 
-    const reply = mockResponses[text.trim()] || "Thank you for sharing. Remember, taking a moment to check in with yourself is a sign of strength. Is there anything specific I can help you with today?";
-    setTimeout(() => {
+    try {
+      if (!isAuthenticated()) {
+        // If not logged in, show a friendly message
+        setTyping(false);
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "Please log in to use the AI Companion. Your responses will be personalized based on your health data!" },
+        ]);
+        return;
+      }
+
+      // Build the message payload for the backend
+      const payload = updatedMessages.map((m) => ({
+        role: m.role === "assistant" ? "assistant" : "user",
+        content: m.content,
+      }));
+
+      const data = await sendChatMessage(payload);
       setTyping(false);
-      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
-    }, 1200);
+      setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
+    } catch (err: any) {
+      setTyping(false);
+      const errorMsg =
+        err?.status === 401
+          ? "Your session has expired. Please log in again to continue."
+          : "I'm having trouble connecting right now. Please try again in a moment.";
+      setMessages((prev) => [...prev, { role: "assistant", content: errorMsg }]);
+    }
+  };
+
+  // Format message content — handle newlines for display
+  const formatContent = (content: string) => {
+    return content.split("\n").map((line, i) => (
+      <span key={i}>
+        {line}
+        {i < content.split("\n").length - 1 && <br />}
+      </span>
+    ));
   };
 
   return (
@@ -78,7 +133,7 @@ export const AICompanion = () => {
                   <Brain className="h-5 w-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <h4 className="font-heading font-semibold text-primary-foreground text-sm">PreventX Mind Companion</h4>
+                  <h4 className="font-heading font-semibold text-primary-foreground text-sm">PreventX AI Companion</h4>
                   <p className="text-xs text-primary-foreground/70">Online • Here to support you</p>
                 </div>
               </div>
@@ -101,32 +156,36 @@ export const AICompanion = () => {
                       ? "gradient-primary text-primary-foreground rounded-br-md"
                       : "bg-muted text-foreground rounded-bl-md"
                   }`}>
-                    {msg.content}
+                    {formatContent(msg.content)}
                   </div>
                 </div>
               ))}
               {typing && (
                 <div className="flex justify-start">
-                  <div className="bg-muted text-muted-foreground px-4 py-2.5 rounded-2xl rounded-bl-md text-sm flex gap-1">
-                    <span className="animate-bounce" style={{ animationDelay: "0ms" }}>.</span>
-                    <span className="animate-bounce" style={{ animationDelay: "150ms" }}>.</span>
-                    <span className="animate-bounce" style={{ animationDelay: "300ms" }}>.</span>
+                  <div className="bg-muted text-muted-foreground px-4 py-2.5 rounded-2xl rounded-bl-md text-sm flex gap-1 items-center">
+                    <Loader2 className="h-3 w-3 animate-spin" />
+                    <span className="text-xs ml-1">Thinking...</span>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Quick Chips */}
+            {/* Quick Chips — fetched from backend */}
             <div className="px-4 pb-2 flex flex-wrap gap-1.5">
-              {quickChips.map((chip) => (
-                <button
-                  key={chip}
-                  onClick={() => send(chip)}
-                  className="px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
-                >
-                  {chip}
-                </button>
-              ))}
+              {chipsLoading ? (
+                <span className="text-xs text-muted-foreground">Loading suggestions...</span>
+              ) : (
+                quickChips.map((chip) => (
+                  <button
+                    key={chip}
+                    onClick={() => send(chip)}
+                    disabled={typing}
+                    className="px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors disabled:opacity-50"
+                  >
+                    {chip}
+                  </button>
+                ))
+              )}
             </div>
 
             {/* Input */}
@@ -135,12 +194,14 @@ export const AICompanion = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && send(input)}
-                placeholder="Share what's on your mind…"
-                className="flex-1 bg-muted rounded-xl px-4 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="Ask me anything about your health…"
+                disabled={typing}
+                className="flex-1 bg-muted rounded-xl px-4 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/30 disabled:opacity-50"
               />
               <button
                 onClick={() => send(input)}
-                className="p-2 rounded-xl gradient-primary text-primary-foreground hover:opacity-90 transition-opacity"
+                disabled={typing || !input.trim()}
+                className="p-2 rounded-xl gradient-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 <Send className="h-4 w-4" />
               </button>
