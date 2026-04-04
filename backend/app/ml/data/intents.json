@@ -3,7 +3,9 @@
     {
       "tag": "greeting",
       "patterns": [
-        "Hi", "Hello", "Hey", "Good morning", "Good evening", "Is anyone there?", "Hi there"
+        "Hi", "Hello", "Hey", "Good morning", "Good evening", "Is anyone there?", "Hi there",
+        "What's up", "Howdy", "Good afternoon", "Hey there", "Hello there", "Greetings",
+        "Hola", "Yo", "Sup", "How are you"
       ],
       "responses": [
         "Hello! I'm your PreventX AI Companion. How can I help you with your health today?",
@@ -14,7 +16,9 @@
     {
       "tag": "goodbye",
       "patterns": [
-        "Bye", "See you later", "Goodbye", "I have to go", "Talk to you later"
+        "Bye", "See you later", "Goodbye", "I have to go", "Talk to you later",
+        "See ya", "Take care", "Until next time", "Good night", "Catch you later",
+        "I'm leaving", "Gotta go", "Bye bye"
       ],
       "responses": [
         "Take care of your health! Goodbye.",
@@ -25,7 +29,9 @@
     {
       "tag": "thanks",
       "patterns": [
-        "Thanks", "Thank you", "That's helpful", "Thanks a lot"
+        "Thanks", "Thank you", "That's helpful", "Thanks a lot",
+        "Thank you so much", "I appreciate it", "Thanks for the help",
+        "Appreciate your help", "That was helpful", "Great help", "Many thanks"
       ],
       "responses": [
         "You're welcome! Your health is my priority.",
@@ -36,7 +42,10 @@
     {
       "tag": "identity",
       "patterns": [
-        "Who are you", "What are you", "Are you a doctor", "What is your name"
+        "Who are you", "What are you", "Are you a doctor", "What is your name",
+        "Tell me about yourself", "What can you do", "What do you do",
+        "Are you a real person", "Are you AI", "What kind of AI are you",
+        "Introduce yourself", "What is PreventX"
       ],
       "responses": [
         "I am the PreventX AI Companion. While I am an advanced AI trained on medical data, I am not a substitute for a licensed medical professional.",
@@ -46,7 +55,11 @@
     {
       "tag": "diet_diabetes",
       "patterns": [
-        "What should I eat for diabetes", "Diet for high blood sugar", "Diabetic food", "Can I eat sugar", "How to manage blood sugar with food"
+        "What should I eat for diabetes", "Diet for high blood sugar", "Diabetic food", "Can I eat sugar",
+        "How to manage blood sugar with food", "Best foods for diabetics", "Diabetes meal plan",
+        "What foods lower blood sugar", "Diabetic diet tips", "Sugar free diet",
+        "What to avoid with diabetes", "Foods to control glucose", "Healthy eating for diabetes",
+        "Carbs for diabetics", "Is fruit okay for diabetes"
       ],
       "responses": [
         "For managing blood sugar, focus on complex carbohydrates (like whole grains, beans, and vegetables) over simple sugars. Prioritize lean proteins and healthy fats to prevent blood sugar spikes. Always monitor your post-meal glucose.",
@@ -56,7 +69,10 @@
     {
       "tag": "diet_hypertension",
       "patterns": [
-        "What to eat for high blood pressure", "Diet for hypertension", "How to lower blood pressure naturally", "Low sodium diet"
+        "What to eat for high blood pressure", "Diet for hypertension", "How to lower blood pressure naturally",
+        "Low sodium diet", "Foods that lower blood pressure", "DASH diet", "Salt free diet",
+        "Reduce blood pressure with food", "Best diet for high BP", "Hypertension eating plan",
+        "What foods reduce hypertension", "Should I avoid salt", "Potassium rich foods"
       ],
       "responses": [
         "To manage high blood pressure, the DASH diet is highly recommended. Reduce your sodium (salt) intake, eat more potassium-rich foods like bananas and spinach, and limit alcohol and caffeine.",
@@ -66,7 +82,11 @@
     {
       "tag": "workout_general",
       "patterns": [
-        "How much should I exercise", "Best workout for beginners", "How to stay active", "What workout is best", "Cardio or weights"
+        "How much should I exercise", "Best workout for beginners", "How to stay active", "What workout is best",
+        "Cardio or weights", "Workout recommendations", "Exercise tips",
+        "How often should I workout", "Best exercise routine", "Physical activity guidelines",
+        "Should I do strength training", "How many steps per day", "Gym routine for health",
+        "Exercise for weight loss", "Staying fit at home"
       ],
       "responses": [
         "The American Heart Association recommends at least 150 minutes of moderate-intensity aerobic activity per week, along with 2 days of strength training. Check your personalized Lifestyle Plan for specific recommendations!",
@@ -76,7 +96,11 @@
     {
       "tag": "mental_stress",
       "patterns": [
-        "I am stressed", "How to relieve stress", "I feel overwhelmed", "Stress management techniques", "I need to relax"
+        "I am stressed", "How to relieve stress", "I feel overwhelmed", "Stress management techniques",
+        "I need to relax", "I'm feeling stressed", "Dealing with stress", "Too much pressure",
+        "Work stress", "Stressed out", "Feeling anxious and stressed",
+        "How to calm down", "Stress relief tips", "Manage my stress levels",
+        "I'm under a lot of stress"
       ],
       "responses": [
         "I'm sorry you're feeling stressed. Try the 4-7-8 breathing technique: Inhale for 4 seconds, hold for 7, and exhale for 8. Taking a short walk or practicing mindfulness can also help lower cortisol levels.",
@@ -86,7 +110,10 @@
     {
       "tag": "mental_anxiety",
       "patterns": [
-        "I have anxiety", "I feel anxious", "Panic attack", "How to stop worrying", "My chest is tight from anxiety"
+        "I have anxiety", "I feel anxious", "Panic attack", "How to stop worrying", "My chest is tight from anxiety",
+        "Anxiety symptoms", "Feeling nervous", "Can't stop overthinking",
+        "Generalized anxiety", "Social anxiety help", "Anxiety attack what to do",
+        "My heart races from anxiety", "How to deal with anxiety"
       ],
       "responses": [
         "Anxiety can feel very overwhelming, but you are safe right now. Try grounding yourself using the 5-4-3-2-1 method: Identify 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, and 1 you can taste.",
@@ -96,17 +123,22 @@
     {
       "tag": "first_aid_cuts",
       "patterns": [
-        "I cut myself", "How to treat a cut", "First aid for a wound", "Bleeding", "Wound care"
+        "I cut myself", "How to treat a cut", "First aid for a wound", "Bleeding", "Wound care",
+        "Scraped my knee", "How to stop bleeding", "Minor wound treatment",
+        "First aid for bleeding", "Bandage a wound", "I got a cut"
       ],
       "responses": [
         "For minor cuts: 1. Wash your hands. 2. Stop the bleeding with gentle pressure. 3. Clean the wound with water (avoid harsh soaps/peroxide). 4. Apply an antibiotic ointment and a sterile bandage. If it's deep or won't stop bleeding after 15 minutes, please seek emergency care.",
-        "Apply firm, direct pressure with a clean cloth. Clean it gently with tap water. If the cut is jagged, gaping, or exposes fat/muscle, you may need stitches—go to an urgent care clinic."
+        "Apply firm, direct pressure with a clean cloth. Clean it gently with tap water. If the cut is jagged, gaping, or exposes fat/muscle, you may need stitches — go to an urgent care clinic."
       ]
     },
     {
       "tag": "general_bp",
       "patterns": [
-        "What is normal blood pressure", "High BP numbers", "What does 120/80 mean", "Blood pressure ranges"
+        "What is normal blood pressure", "High BP numbers", "What does 120/80 mean", "Blood pressure ranges",
+        "Normal BP for my age", "Healthy blood pressure", "High blood pressure symptoms",
+        "Low blood pressure meaning", "Blood pressure chart", "BP reading explained",
+        "Is 140/90 high", "Understanding blood pressure", "Systolic and diastolic meaning"
       ],
       "responses": [
         "Normal blood pressure is typically around 120/80 mmHg or lower. Elevated is 120-129 / <80. Hypertension Stage 1 is 130-139 / 80-89. If your systolic (top) is over 180 or diastolic (bottom) is over 120, seek emergency medical attention.",
@@ -116,7 +148,10 @@
     {
       "tag": "general_sugar",
       "patterns": [
-        "What is normal blood sugar", "Fasting glucose ranges", "Blood sugar levels", "HbA1c meaning"
+        "What is normal blood sugar", "Fasting glucose ranges", "Blood sugar levels", "HbA1c meaning",
+        "Normal glucose level", "Prediabetes sugar levels", "High blood sugar symptoms",
+        "Blood sugar after eating", "How to test blood sugar", "A1c normal range",
+        "What is hyperglycemia", "Glucose monitoring", "Random blood sugar levels"
       ],
       "responses": [
         "A normal fasting blood sugar level is generally between 70 and 99 mg/dL. A level of 100 to 125 mg/dL indicates prediabetes, and 126 mg/dL or higher suggests diabetes. Always consult your doctor for diagnosis.",
@@ -126,7 +161,10 @@
     {
       "tag": "app_vitals",
       "patterns": [
-        "How do I log vitals", "Where is my blood pressure data", "How to use the dashboard", "Track heart rate"
+        "How do I log vitals", "Where is my blood pressure data", "How to use the dashboard", "Track heart rate",
+        "How to log my vitals", "Where to enter blood pressure", "Record my health data",
+        "Track my blood sugar", "How to input my vitals", "Where is vitals page",
+        "How to add health measurements", "Monitor my health", "Vitals tracking help"
       ],
       "responses": [
         "You can log your vitals by navigating to the 'Vitals' section from the sidebar and clicking 'Add New Vital'. Your dashboard automatically visualizes the last 7 to 30 days of this data.",
@@ -136,7 +174,10 @@
     {
       "tag": "app_diet",
       "patterns": [
-        "Where is my diet plan", "How do I get a workout plan", "Create a meal plan for me"
+        "Where is my diet plan", "How do I get a workout plan", "Create a meal plan for me",
+        "Show me my diet", "Find my exercise plan", "Personalized meal plan",
+        "My fitness plan", "Where to see workout", "Diet and exercise section",
+        "Generate a meal plan", "My nutrition plan"
       ],
       "responses": [
         "Your personalized diet and workout plan is located in the 'Diet & Exercise' tab on the sidebar. If it's empty, ensure you have filled out your Age, Weight, and Pre-existing conditions in your Profile!"
@@ -145,7 +186,10 @@
     {
       "tag": "headache",
       "patterns": [
-        "I have a headache", "My head hurts", "Migraine", "Throbbing pain in my head", "How to cure a headache"
+        "I have a headache", "My head hurts", "Migraine", "Throbbing pain in my head", "How to cure a headache",
+        "Headache remedies", "Tension headache", "Head pain won't go away",
+        "Constant headache", "Headache treatment", "Migraine symptoms",
+        "What causes headaches", "Headache medicine"
       ],
       "responses": [
         "For a standard headache, ensure you are fully hydrated and try resting in a quiet, dark room. Over-the-counter pain relievers like Ibuprofen or Acetaminophen can help. If it is severe, sudden, or accompanied by vision loss, seek immediate medical care.",
@@ -155,7 +199,10 @@
     {
       "tag": "fever",
       "patterns": [
-        "I have a fever", "My temperature is high", "I feel hot and cold", "Chills and fever", "How to lower fever"
+        "I have a fever", "My temperature is high", "I feel hot and cold", "Chills and fever", "How to lower fever",
+        "Fever remedies", "High temperature what to do", "Body temperature is high",
+        "Fever treatment at home", "When to worry about fever", "Child has fever",
+        "Persistent fever", "Fever with body aches"
       ],
       "responses": [
         "If you have a fever, the most important thing is to stay hydrated and rest. You can take Acetaminophen or Ibuprofen to lower your temperature. If the fever exceeds 103°F (39.4°C) or lasts more than 3 days, consult a physician.",
@@ -165,7 +212,10 @@
     {
       "tag": "stomach",
       "patterns": [
-        "Stomach ache", "I feel nauseous", "My tummy hurts", "Diarrhea", "Vomiting", "Food poisoning"
+        "Stomach ache", "I feel nauseous", "My tummy hurts", "Diarrhea", "Vomiting", "Food poisoning",
+        "Upset stomach", "Stomach pain remedies", "Indigestion",
+        "Bloating and gas", "Abdominal cramps", "Stomach flu",
+        "Acid reflux", "Heartburn"
       ],
       "responses": [
         "For stomach distress, stick to the BRAT diet (Bananas, Rice, Applesauce, Toast) and sip clear fluids slowly to stay hydrated. Avoid dairy, caffeine, and spicy foods until you feel better.",
@@ -175,7 +225,10 @@
     {
       "tag": "sleep",
       "patterns": [
-        "I can't sleep", "Insomnia", "How to sleep better", "Trouble falling asleep", "Tired but can't sleep"
+        "I can't sleep", "Insomnia", "How to sleep better", "Trouble falling asleep", "Tired but can't sleep",
+        "Sleep tips", "Improve sleep quality", "Waking up at night",
+        "Sleep hygiene", "Best sleeping habits", "Why can't I sleep",
+        "Melatonin for sleep", "Sleep schedule help", "Sleep better at night"
       ],
       "responses": [
         "To improve your sleep, establish a consistent bedtime routine. Avoid screens, caffeine, and heavy meals at least an hour before bed. Ensure your bedroom is cool and dark.",
@@ -185,7 +238,10 @@
     {
       "tag": "hydration",
       "patterns": [
-        "How much water should I drink", "Am I dehydrated", "Water intake", "Benefits of drinking water"
+        "How much water should I drink", "Am I dehydrated", "Water intake", "Benefits of drinking water",
+        "Daily water requirement", "Signs of dehydration", "Water intake calculator",
+        "Should I drink more water", "Hydration tips", "How many glasses of water",
+        "Electrolyte drinks", "Water vs juice"
       ],
       "responses": [
         "A general rule is to drink at least 8 glasses (about 2 liters) of water a day, though this varies based on your weight and activity level. If your urine is pale yellow, you are well-hydrated.",
@@ -195,11 +251,64 @@
     {
       "tag": "chest_pain",
       "patterns": [
-        "My chest hurts", "Chest pain", "Heart attack symptoms", "Tightness in chest"
+        "My chest hurts", "Chest pain", "Heart attack symptoms", "Tightness in chest",
+        "Chest pressure", "Sharp chest pain", "Pain in left chest",
+        "Chest discomfort", "Heart pain", "Chest burning",
+        "Squeezing in chest"
       ],
       "responses": [
-        "🚨 WARNING: Chest pain can be a sign of a medical emergency like a heart attack (especially if it radiates to your arm/jaw, or is accompanied by shortness of breath and sweating). Please call emergency services (e.g., 911) immediately.",
+        "WARNING: Chest pain can be a sign of a medical emergency like a heart attack (especially if it radiates to your arm/jaw, or is accompanied by shortness of breath and sweating). Please call emergency services (e.g., 911) immediately.",
         "If you are experiencing sudden, severe chest tightness or pain, do not wait. Please contact emergency medical services right away. Do NOT try to diagnose this on your own."
+      ]
+    },
+    {
+      "tag": "breathing_exercise",
+      "patterns": [
+        "Breathing exercise", "How to do breathing exercises", "Box breathing",
+        "Deep breathing technique", "Calm my breathing", "Guided breathing",
+        "4-7-8 breathing", "Breathing for anxiety", "Relaxation breathing",
+        "Help me breathe", "Teach me breathing"
+      ],
+      "responses": [
+        "Let's do a calming box breath together:\n\nInhale for 4 seconds\nHold for 4 seconds\nExhale for 4 seconds\nHold for 4 seconds\n\nRepeat 4 times. Notice how your body relaxes with each cycle.",
+        "Try the 4-7-8 technique: Breathe in through your nose for 4 seconds, hold your breath for 7 seconds, then exhale slowly through your mouth for 8 seconds. This activates your parasympathetic nervous system."
+      ]
+    },
+    {
+      "tag": "motivation",
+      "patterns": [
+        "Motivate me", "I need motivation", "I feel unmotivated", "Give me encouragement",
+        "I want to give up", "Feeling lazy", "No energy to workout",
+        "Need some encouragement", "Push me to be healthy", "Inspire me"
+      ],
+      "responses": [
+        "Remember: every small healthy choice you make today compounds into a healthier tomorrow. You're already here, tracking your health — that puts you ahead of 90% of people. Keep going!",
+        "Progress isn't always linear, but consistency is key. Even a 10-minute walk counts. Your body will thank you for every effort you make today."
+      ]
+    },
+    {
+      "tag": "weight_management",
+      "patterns": [
+        "How to lose weight", "Weight loss tips", "How to gain weight healthily",
+        "BMI too high", "Overweight help", "Healthy weight range",
+        "Calories for weight loss", "Weight management diet", "How many calories should I eat",
+        "Losing belly fat", "Weight loss exercise"
+      ],
+      "responses": [
+        "Healthy weight management starts with a balanced diet and regular physical activity. Aim for a caloric deficit of about 500 calories per day for gradual weight loss (about 0.5 kg per week). Focus on whole foods and avoid crash diets.",
+        "Your BMI is tracked in PreventX! For personalized calorie and macro targets, check the Diet & Exercise section. A combination of strength training and cardio yields the best sustainable results."
+      ]
+    },
+    {
+      "tag": "heart_health",
+      "patterns": [
+        "How to keep my heart healthy", "Heart health tips", "Cardiovascular health",
+        "Foods for heart health", "Prevent heart disease", "Heart rate too high",
+        "Resting heart rate", "Heart rate zones", "Is my heart rate normal"
+      ],
+      "responses": [
+        "For heart health: exercise regularly (150 min/week moderate intensity), eat omega-3 rich foods (salmon, walnuts), limit saturated fats and sodium, manage stress, and avoid smoking. A resting heart rate of 60-100 bpm is normal for adults.",
+        "Track your heart rate regularly in PreventX Vitals! A lower resting heart rate generally indicates better cardiovascular fitness. If your resting HR consistently exceeds 100 bpm, consult your doctor."
       ]
     }
   ]
