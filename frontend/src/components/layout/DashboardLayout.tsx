@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Activity, UtensilsCrossed, Pill, Bell, UserCircle, LogOut, Heart, Menu, X, Settings, ShieldAlert,
@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { AICompanion } from "@/components/ai-companion/AICompanion";
 import { useAppContext } from "@/contexts/AppContext";
 import { t } from "@/lib/translations";
+import { fetchUserProfile, logoutUser, isAuthenticated, type UserProfile } from "@/lib/api";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -19,6 +20,31 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { aiCompanionEnabled, language: lang } = useAppContext();
+  const [user, setUser] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      fetchUserProfile()
+        .then(setUser)
+        .catch(() => {
+          // Token might be invalid
+          logoutUser();
+          navigate("/login");
+        });
+    } else {
+      navigate("/login");
+    }
+  }, []);
+
+  const firstName = user?.full_name?.split(" ")[0] || "User";
+  const initials = user?.full_name
+    ? user.full_name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
+    : "U";
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/");
+  };
 
   const navItems = [
     { icon: LayoutDashboard, label: t(lang, "dashboard"), path: "/dashboard" },
@@ -53,7 +79,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           })}
         </nav>
         <div className="p-4">
-          <button onClick={() => navigate("/")} className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all w-full">
+          <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all w-full">
             <LogOut className="h-5 w-5" />
             {t(lang, "logout")}
           </button>
@@ -93,7 +119,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           <div className="flex items-center gap-4">
             <button className="lg:hidden" onClick={() => setSidebarOpen(true)}><Menu className="h-5 w-5 text-foreground" /></button>
             <h2 className="font-heading font-semibold text-foreground">
-              {t(lang, "welcomeBack")} <span className="gradient-text">Alex</span>
+              {t(lang, "welcomeBack")} <span className="gradient-text">{firstName}</span>
             </h2>
           </div>
           <div className="flex items-center gap-3">
@@ -102,7 +128,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-destructive" />
             </Button>
             <Avatar className="h-9 w-9 cursor-pointer" onClick={() => navigate("/profile")}>
-              <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm">AK</AvatarFallback>
+              <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm">{initials}</AvatarFallback>
             </Avatar>
           </div>
         </header>

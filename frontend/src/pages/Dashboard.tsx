@@ -1,53 +1,169 @@
 import { motion } from "framer-motion";
-import { Activity, Heart, Droplets, Scale, TrendingUp, TrendingDown, Minus, Lightbulb, Pill, Clock, Check, Moon, Dumbbell, Apple, Brain, SmilePlus, MessageCircle } from "lucide-react";
-import { useState } from "react";
+import { Activity, Heart, Droplets, Scale, TrendingUp, TrendingDown, Minus, Lightbulb, Pill, Clock, Check, Moon, Dumbbell, Apple, Brain, SmilePlus, MessageCircle, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { Progress } from "@/components/ui/progress";
 import { useAppContext } from "@/contexts/AppContext";
 import { t } from "@/lib/translations";
-
-const chartData7d = [
-  { day: "Mon", bp: 120, sugar: 95, hr: 72 },
-  { day: "Tue", bp: 118, sugar: 102, hr: 75 },
-  { day: "Wed", bp: 122, sugar: 98, hr: 70 },
-  { day: "Thu", bp: 119, sugar: 90, hr: 73 },
-  { day: "Fri", bp: 125, sugar: 105, hr: 78 },
-  { day: "Sat", bp: 117, sugar: 92, hr: 71 },
-  { day: "Sun", bp: 121, sugar: 97, hr: 74 },
-];
-
-const medications = [
-  { name: "Vitamin D3", time: "8:00 AM", taken: true },
-  { name: "Omega-3", time: "8:00 AM", taken: true },
-  { name: "Metformin", time: "1:00 PM", taken: false },
-  { name: "Multivitamin", time: "9:00 PM", taken: false },
-];
+import {
+  fetchVitals,
+  fetchMedications,
+  fetchRiskPrediction,
+  fetchDailyLogs,
+  toggleMedication,
+  type VitalRecord,
+  type MedicationRecord,
+  type DailyLogRecord,
+  isAuthenticated,
+} from "@/lib/api";
 
 const trendIcon = (tr: "up" | "down" | "stable") =>
   tr === "up" ? <TrendingUp className="h-4 w-4" /> : tr === "down" ? <TrendingDown className="h-4 w-4" /> : <Minus className="h-4 w-4" />;
 
+/** Compute trend by comparing latest vs previous value */
+function computeTrend(current: number | null, previous: number | null): "up" | "down" | "stable" {
+  if (current == null || previous == null) return "stable";
+  if (current > previous + 2) return "up";
+  if (current < previous - 2) return "down";
+  return "stable";
+}
+
 const Dashboard = () => {
   const { language: lang } = useAppContext();
   const [timeRange, setTimeRange] = useState<"7d" | "30d">("7d");
-  const [meds, setMeds] = useState(medications);
-  const riskScore = 28;
 
-  const vitals = [
-    { icon: Activity, label: t(lang, "bloodPressure"), value: "121/78", unit: "mmHg", trend: "stable" as const, color: "text-secondary" },
-    { icon: Droplets, label: t(lang, "bloodSugar"), value: "97", unit: "mg/dL", trend: "down" as const, color: "text-success" },
-    { icon: Heart, label: t(lang, "heartRate"), value: "74", unit: "bpm", trend: "stable" as const, color: "text-destructive" },
-    { icon: Scale, label: t(lang, "bmi"), value: "23.4", unit: "kg/m²", trend: "up" as const, color: "text-warning" },
-  ];
+  // ── Live Data State ──
+  const [vitalsData, setVitalsData] = useState<VitalRecord[]>([]);
+  const [medsData, setMedsData] = useState<MedicationRecord[]>([]);
+  const [logsData, setLogsData] = useState<DailyLogRecord[]>([]);
+  const [riskScore, setRiskScore] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
 
-  const toggleMed = (i: number) => {
-    setMeds((prev) => prev.map((m, idx) => (idx === i ? { ...m, taken: !m.taken } : m)));
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      setLoading(false);
+      return;
+    }
+    loadDashboardData();
+  }, []);
+
+  const loadDashboardData = async () => {
+    setLoading(true);
+    try {
+      const [vitals, meds, risk, logs] = await Promise.allSettled([
+        fetchVitals(),
+        fetchMedications(),
+        fetchRiskPrediction(),
+        fetchDailyLogs(),
+      ]);
+      if (vitals.status === "fulfilled") setVitalsData(vitals.value);
+      if (meds.status === "fulfilled") setMedsData(meds.value);
+      if (risk.status === "fulfilled") setRiskScore(risk.value.risk_score);
+      if (logs.status === "fulfilled") setLogsData(logs.value);
+    } catch {
+      // Errors are handled gracefully — we just show empty states
+    } finally {
+      setLoading(false);
+    }
   };
 
+  // ── Derive Chart Data from vitals ──
+  const chartData = (() => {
+    const limit = timeRange === "7d" ? 7 : 30;
+    // Vitals come sorted desc, reverse for chronological chart
+    const sliced = vitalsData.slice(0, limit).reverse();
+    return sliced.map((v) => {
+      const d = new Date(v.timestamp);
+      const dayLabel = d.toLocaleDateString("en-US", { weekday: "short" });
+      return {
+        day: dayLabel,
+        bp: v.blood_pressure_sys || 0,
+        sugar: v.blood_sugar || 0,
+        hr: v.heart_rate || 0,
+      };
+    });
+  })();
+
+  // ── Derive Latest Vitals Cards from most recent record ──
+  const latestVital = vitalsData[0] || null;
+  const prevVital = vitalsData[1] || null;
+
+  const vitals = [
+    {
+      icon: Activity,
+      label: t(lang, "bloodPressure"),
+      value: latestVital ? `${latestVital.blood_pressure_sys || "--"}/${latestVital.blood_pressure_dia || "--"}` : "--/--",
+      unit: "mmHg",
+      trend: computeTrend(latestVital?.blood_pressure_sys ?? null, prevVital?.blood_pressure_sys ?? null),
+      color: "text-secondary",
+    },
+    {
+      icon: Droplets,
+      label: t(lang, "bloodSugar"),
+      value: latestVital?.blood_sugar?.toString() || "--",
+      unit: "mg/dL",
+      trend: computeTrend(latestVital?.blood_sugar ?? null, prevVital?.blood_sugar ?? null),
+      color: "text-success",
+    },
+    {
+      icon: Heart,
+      label: t(lang, "heartRate"),
+      value: latestVital?.heart_rate?.toString() || "--",
+      unit: "bpm",
+      trend: computeTrend(latestVital?.heart_rate ?? null, prevVital?.heart_rate ?? null),
+      color: "text-destructive",
+    },
+    {
+      icon: Scale,
+      label: t(lang, "bmi"),
+      value: latestVital?.bmi?.toFixed(1) || "--",
+      unit: "kg/m²",
+      trend: computeTrend(latestVital?.bmi ?? null, prevVital?.bmi ?? null),
+      color: "text-warning",
+    },
+  ];
+
+  // ── Medication toggle (calls real backend) ──
+  const handleToggleMed = async (i: number) => {
+    const med = medsData[i];
+    if (!med) return;
+    const newTaken = !med.taken;
+    // Optimistic UI update
+    setMedsData((prev) => prev.map((m, idx) => (idx === i ? { ...m, taken: newTaken } : m)));
+    try {
+      await toggleMedication(med.id, newTaken);
+    } catch {
+      // Revert on failure
+      setMedsData((prev) => prev.map((m, idx) => (idx === i ? { ...m, taken: !newTaken } : m)));
+    }
+  };
+
+  // ── Derive mental wellness from daily logs ──
+  const recentLogs = logsData.slice(0, 7);
+  const avgWellness = recentLogs.length > 0
+    ? Math.round(recentLogs.reduce((sum, l) => sum + ((10 - (l.stress_level || 5)) + (l.sleep_quality || 5) + (l.diet_quality || 5)) / 3 * 10, 0) / recentLogs.length)
+    : 0;
+  const goodDays = recentLogs.filter((l) => (l.stress_level || 5) <= 4).length;
+  const moderateDays = recentLogs.filter((l) => (l.stress_level || 5) > 4 && (l.stress_level || 5) <= 7).length;
+
+  // ── Risk level derivation ──
   const riskLevel = riskScore < 30 ? t(lang, "lowRisk") : riskScore < 60 ? t(lang, "moderateRisk") : t(lang, "highRisk");
   const riskColor = riskScore < 30 ? "text-success" : riskScore < 60 ? "text-warning" : "text-destructive";
   const riskGlow = riskScore < 30 ? "shadow-[0_0_40px_hsl(152,55%,48%,0.25)]" : riskScore < 60 ? "shadow-[0_0_40px_hsl(38,90%,55%,0.25)]" : "shadow-[0_0_40px_hsl(0,65%,58%,0.25)]";
 
   const tips = [t(lang, "tip1"), t(lang, "tip2"), t(lang, "tip3")];
+
+  // ── Loading Skeleton ──
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto flex items-center justify-center min-h-[60vh]">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-8 w-8 text-primary animate-spin" />
+          <p className="text-muted-foreground text-sm">Loading your health data...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
@@ -98,17 +214,23 @@ const Dashboard = () => {
               ))}
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={220}>
-            <LineChart data={chartData7d}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis dataKey="day" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-              <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
-              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "12px", fontSize: "12px" }} />
-              <Line type="monotone" dataKey="bp" stroke="hsl(217, 100%, 61%)" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="hr" stroke="hsl(0, 65%, 58%)" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="sugar" stroke="hsl(152, 55%, 48%)" strokeWidth={2} dot={false} />
-            </LineChart>
-          </ResponsiveContainer>
+          {chartData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={220}>
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis dataKey="day" stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "12px", fontSize: "12px" }} />
+                <Line type="monotone" dataKey="bp" stroke="hsl(217, 100%, 61%)" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="hr" stroke="hsl(0, 65%, 58%)" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="sugar" stroke="hsl(152, 55%, 48%)" strokeWidth={2} dot={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="h-[220px] flex items-center justify-center">
+              <p className="text-sm text-muted-foreground">No vitals data yet. Log your first entry in the Vitals page!</p>
+            </div>
+          )}
           <div className="flex gap-6 mt-3 justify-center">
             <span className="flex items-center gap-1.5 text-xs text-muted-foreground"><span className="w-3 h-0.5 rounded bg-secondary inline-block" />BP</span>
             <span className="flex items-center gap-1.5 text-xs text-muted-foreground"><span className="w-3 h-0.5 rounded bg-destructive inline-block" />{t(lang, "heartRate")}</span>
@@ -117,7 +239,7 @@ const Dashboard = () => {
         </motion.div>
 
         <div className="space-y-6">
-          {/* Mental Wellness */}
+          {/* Mental Wellness — derived from daily logs */}
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="glass-card rounded-2xl p-6">
             <div className="flex items-center gap-2 mb-1">
               <SmilePlus className="h-5 w-5 text-secondary" />
@@ -126,13 +248,13 @@ const Dashboard = () => {
             <p className="text-xs text-muted-foreground mb-4">{t(lang, "trackEmotional")}</p>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs text-muted-foreground">{t(lang, "weeklyWellnessScore")}</span>
-              <span className="text-sm font-bold font-heading text-foreground">78/100</span>
+              <span className="text-sm font-bold font-heading text-foreground">{avgWellness}/100</span>
             </div>
-            <Progress value={78} className="h-2 mb-4" />
+            <Progress value={avgWellness} className="h-2 mb-4" />
             <div className="grid grid-cols-3 gap-2 text-center mb-4">
-              <div><p className="text-xl font-bold font-heading text-success">5</p><p className="text-[10px] text-muted-foreground">{t(lang, "goodDays")}</p></div>
-              <div><p className="text-xl font-bold font-heading text-warning">2</p><p className="text-[10px] text-muted-foreground">{t(lang, "moderate")}</p></div>
-              <div><p className="text-xl font-bold font-heading text-secondary">12</p><p className="text-[10px] text-muted-foreground">{t(lang, "checkIns")}</p></div>
+              <div><p className="text-xl font-bold font-heading text-success">{goodDays}</p><p className="text-[10px] text-muted-foreground">{t(lang, "goodDays")}</p></div>
+              <div><p className="text-xl font-bold font-heading text-warning">{moderateDays}</p><p className="text-[10px] text-muted-foreground">{t(lang, "moderate")}</p></div>
+              <div><p className="text-xl font-bold font-heading text-secondary">{recentLogs.length}</p><p className="text-[10px] text-muted-foreground">{t(lang, "checkIns")}</p></div>
             </div>
             <div className="border-t border-border/50 pt-3 text-center">
               <p className="text-xs text-muted-foreground mb-1">{t(lang, "needSupport")}</p>
@@ -162,25 +284,29 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Row 3: Medications */}
+      {/* Row 3: Medications — from backend */}
       <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="glass-card rounded-2xl p-6">
         <div className="flex items-center gap-2 mb-4">
           <Pill className="h-5 w-5 text-primary" />
           <h3 className="font-heading font-semibold text-foreground">{t(lang, "todaysMedications")}</h3>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {meds.map((med, i) => (
-            <button key={i} onClick={() => toggleMed(i)} className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-200 text-left ${med.taken ? "bg-success/5 border-success/20" : "bg-card border-border hover:border-primary/30"}`}>
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${med.taken ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"}`}>
-                {med.taken ? <Check className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
-              </div>
-              <div>
-                <p className={`text-sm font-medium ${med.taken ? "text-success line-through" : "text-foreground"}`}>{med.name}</p>
-                <p className="text-xs text-muted-foreground">{med.time}</p>
-              </div>
-            </button>
-          ))}
-        </div>
+        {medsData.length > 0 ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {medsData.map((med, i) => (
+              <button key={med.id} onClick={() => handleToggleMed(i)} className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-200 text-left ${med.taken ? "bg-success/5 border-success/20" : "bg-card border-border hover:border-primary/30"}`}>
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${med.taken ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"}`}>
+                  {med.taken ? <Check className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
+                </div>
+                <div>
+                  <p className={`text-sm font-medium ${med.taken ? "text-success line-through" : "text-foreground"}`}>{med.name}</p>
+                  <p className="text-xs text-muted-foreground">{med.time}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground text-center py-4">No medications added yet. Add them in the Medications page!</p>
+        )}
       </motion.div>
     </div>
   );
