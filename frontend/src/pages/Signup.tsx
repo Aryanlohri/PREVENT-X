@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { signupUser } from "@/lib/api";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -18,11 +19,17 @@ const Signup = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      await signupUser(name, email, password);
       toast({ title: "Account created!", description: "Welcome to PreventX." });
       navigate("/dashboard");
-    }, 800);
+    } catch (err: any) {
+      const message = err?.detail || "Signup failed. Please try again.";
+      toast({ title: "Signup Error", description: message, variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

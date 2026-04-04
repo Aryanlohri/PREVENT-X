@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { loginUser } from "@/lib/api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,12 +18,17 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Mock login — will connect to Cloud later
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      await loginUser(email, password);
       toast({ title: "Welcome back!", description: "You've been logged in successfully." });
       navigate("/dashboard");
-    }, 800);
+    } catch (err: any) {
+      const message = err?.detail || "Login failed. Please check your credentials.";
+      toast({ title: "Login Error", description: message, variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
