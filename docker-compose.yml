@@ -1,51 +1,30 @@
-version: '3.8'
-
 services:
-  # 1. PostgreSQL Database Layer
-  db:
-    image: postgres:15-alpine
-    container_name: preventx-db
-    restart: always
-    environment:
-      POSTGRES_USER: preventx_user
-      POSTGRES_PASSWORD: preventx_password
-      POSTGRES_DB: preventx_db
-    ports:
-      - "5432:5432"
-    volumes:
-      - preventx_pgdata:/var/lib/postgresql/data
-
-  # 2. Python FastAPI Backend + Machine Learning Models
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: preventx-backend
-    restart: always
-    depends_on:
-      - db
-    environment:
-      - DATABASE_URL=postgresql://preventx_user:preventx_password@db:5432/preventx_db
     ports:
       - "8000:8000"
     volumes:
-      # Mount the static ML models folder so they can be read dynamically
-      - ./backend/app/ml/models:/app/app/ml/models
-      # Mount the data folder just in case
-      - ./backend/app/ml/data:/app/app/ml/data
+      - protectx-db:/app/data
+    environment:
+      - VITE_ALLOWED_ORIGINS=http://localhost:8080,http://localhost:8081,http://localhost:80
+      - DATABASE_URL=sqlite:///./data/sql_app.db
+    restart: always
 
-  # 3. React/Vite Frontend (Served via Nginx)
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - VITE_API_BASE_URL=/
     container_name: preventx-frontend
-    restart: always
-    depends_on:
-      - backend
-    # Port 80 exposed as 8080 to avoid conflicts with other local dev servers
     ports:
       - "8080:80"
+    depends_on:
+      - backend
+    restart: always
 
 volumes:
-  preventx_pgdata:
+  protectx-db:

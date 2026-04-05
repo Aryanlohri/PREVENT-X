@@ -1,9 +1,8 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth, vitals, medication, daily_log, chat, ml, user
 from app.database.session import engine
-
-# Import all models so Base.metadata.create_all registers them
 from app.models import user as user_model, vitals as vitals_model, medication as medication_model, daily_log as daily_log_model
 from app.database.base import Base
 
@@ -12,10 +11,12 @@ app = FastAPI()
 # Create DB tables (including the new ones)
 Base.metadata.create_all(bind=engine)
 
-# CORS (VERY IMPORTANT for frontend connection)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
+# Configure CORS dynamically for production
+allowed_origins_env = os.getenv("VITE_ALLOWED_ORIGINS", "")
+allowed_origins = [origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()]
+
+if not allowed_origins:
+    allowed_origins = [
         "http://localhost:5173", 
         "http://127.0.0.1:5173",
         "http://localhost:8080",
@@ -24,7 +25,11 @@ app.add_middleware(
         "http://127.0.0.1:8081",
         "http://localhost:8082",
         "http://127.0.0.1:8082"
-    ],
+    ]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
