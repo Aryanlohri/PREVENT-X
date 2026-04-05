@@ -1,4 +1,9 @@
 import os
+import sys
+
+# Fix import paths for Vercel serverless
+sys.path.insert(0, os.path.dirname(__file__))
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth, vitals, medication, daily_log, chat, ml, user
@@ -8,8 +13,11 @@ from app.database.base import Base
 
 app = FastAPI()
 
-# Create DB tables
-Base.metadata.create_all(bind=engine)
+# Create DB tables — wrapped to prevent crash if DB is unreachable
+try:
+    Base.metadata.create_all(bind=engine)
+except Exception as e:
+    print(f"Warning: Could not create tables: {e}")
 
 # Configure CORS
 allowed_origins_env = os.getenv("VITE_ALLOWED_ORIGINS", "")
@@ -41,8 +49,7 @@ app.include_router(user.router, prefix="/api/users", tags=["Users"])
 def root():
     return {"message": "PreventX Backend Running 🚀"}
 
-# WebSocket — note: this will not work on Vercel (serverless)
-# Keep it here for local dev, but move to Railway/Render for production WS support
+# WebSocket — will not work on Vercel (serverless), kept for local dev only
 from fastapi import WebSocket, WebSocketDisconnect
 from app.core.sockets import manager
 
