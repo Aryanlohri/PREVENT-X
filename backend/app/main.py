@@ -34,9 +34,36 @@ allowed_origins_env = os.getenv("VITE_ALLOWED_ORIGINS", "")
 if allowed_origins_env:
     allowed_origins.extend([origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()])
 
+from fastapi import Request, Response
+
+@app.middleware("http")
+async def force_cors_middleware(request: Request, call_next):
+    # Log the incoming origin for debugging
+    origin = request.headers.get("origin")
+    
+    # Preflight (OPTIONS) request handling
+    if request.method == "OPTIONS":
+        response = Response()
+        response.headers["Access-Control-Allow-Origin"] = origin or "*"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Requested-With"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        return response
+
+    response = await call_next(request)
+    
+    # Inject CORS headers into every response
+    response.headers["Access-Control-Allow-Origin"] = origin or "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, x-requested-with"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    
+    return response
+
+# Standard CORSMiddleware as a backup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Temporarily using wildcard to handle all subdomains and unblock production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
