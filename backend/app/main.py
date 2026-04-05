@@ -21,17 +21,22 @@ except Exception as e:
     print(f"Warning: Could not create tables: {e}")
 
 # Configure CORS
-allowed_origins_env = os.getenv("VITE_ALLOWED_ORIGINS", "")
-allowed_origins = [origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()]
+allowed_origins = [
+    "https://prevent-x.vercel.app",
+    "https://prevent-x-production.up.railway.app",
+    "http://localhost:5173",
+    "http://localhost:8080",
+    "http://localhost:3000",
+]
 
-if not allowed_origins:
-    allowed_origins = [
-        "https://prevent-x.vercel.app",
-    ]
+# Add any environment-specific origins
+allowed_origins_env = os.getenv("VITE_ALLOWED_ORIGINS", "")
+if allowed_origins_env:
+    allowed_origins.extend([origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()])
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=["*"], # Temporarily using wildcard to handle all subdomains and unblock production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
