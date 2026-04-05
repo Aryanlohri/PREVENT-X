@@ -3,7 +3,9 @@
  * Manages JWT auth tokens, request/response handling, and error normalization.
  */
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const IS_LOCALHOST = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 
+  (IS_LOCALHOST ? "http://localhost:8000" : "https://prevent-x-production.up.railway.app");
 
 // ─── Token Management ──────────────────────────────────────────
 export function getToken(): string | null {
