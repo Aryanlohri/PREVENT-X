@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { Pill, Plus, Check, Clock, X } from "lucide-react";
-import { useState } from "react";
+import { Pill as PillIcon, Plus, Check, Clock, X, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,52 +8,95 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { toast } from "sonner";
 import { useAppContext } from "@/contexts/AppContext";
 import { t } from "@/lib/translations";
+import { fetchMedications, createMedication, toggleMedication, type MedicationRecord, isApiError } from "@/lib/api";
 
-interface Med {
+interface GroupedMed {
   name: string;
   dosage: string;
-  times: string[];
-  taken: boolean[];
+  items: MedicationRecord[];
 }
-
-const initialMeds: Med[] = [
-  { name: "Vitamin D3 2000IU", dosage: "1 tablet", times: ["8:00 AM"], taken: [true] },
-  { name: "Omega-3 Fish Oil", dosage: "1 softgel", times: ["8:00 AM"], taken: [true] },
-  { name: "Metformin 500mg", dosage: "1 tablet", times: ["1:00 PM", "9:00 PM"], taken: [false, false] },
-  { name: "Multivitamin Complex", dosage: "1 tablet", times: ["9:00 PM"], taken: [false] },
-];
 
 const Medications = () => {
   const { language: lang } = useAppContext();
-  const [meds, setMeds] = useState<Med[]>(initialMeds);
+  const [loading, setLoading] = useState(true);
+  const [meds, setMeds] = useState<MedicationRecord[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  
+  // Form state
   const [newName, setNewName] = useState("");
   const [newDosage, setNewDosage] = useState("");
   const [newTime, setNewTime] = useState("08:00");
 
-  const toggle = (mIdx: number, tIdx: number) => {
-    setMeds(prev => prev.map((m, i) => i === mIdx ? { ...m, taken: m.taken.map((tk, j) => j === tIdx ? !tk : tk) } : m));
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchMedications();
+      setMeds(data);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to load medications");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const removeMed = (idx: number) => {
-    setMeds(prev => prev.filter((_, i) => i !== idx));
-    toast.success("Medication removed");
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const toggle = async (medId: number, currentTaken: boolean) => {
+    // Optimistic UI update
+    setMeds(prev => prev.map(m => m.id === medId ? { ...m, taken: !currentTaken } : m));
+    
+    try {
+      await toggleMedication(medId, !currentTaken);
+    } catch (err) {
+      // Revert on error
+      setMeds(prev => prev.map(m => m.id === medId ? { ...m, taken: currentTaken } : m));
+      const msg = isApiError(err) ? err.detail : "Failed to update medication status";
+      toast.error(msg);
+    }
   };
 
-  const addMed = () => {
+  const addMed = async () => {
     if (!newName.trim()) return toast.error("Please enter medication name");
-    const timeStr = new Date(`2000-01-01T${newTime}`).toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: true }).toUpperCase();
-    setMeds(prev => [...prev, { name: newName, dosage: newDosage || "1 tablet", times: [timeStr], taken: [false] }]);
-    setNewName(""); setNewDosage(""); setNewTime("08:00");
-    setDialogOpen(false);
-    toast.success("Medication added");
+    
+    setSaving(true);
+    try {
+      const timeStr = new Date(`2000-01-01T${newTime}`).toLocaleTimeString([], { 
+        hour: "numeric", minute: "2-digit", hour12: true 
+      }).toUpperCase();
+      
+      const payload = {
+        name: newName,
+        time: timeStr,
+        taken: false
+      };
+
+      const saved = await createMedication(payload);
+      setMeds(prev => [saved, ...prev]);
+      setNewName(""); setNewDosage(""); setNewTime("08:00");
+      setDialogOpen(false);
+      toast.success("Medication added successfully");
+    } catch (err) {
+      const msg = isApiError(err) ? err.detail : "Failed to add medication";
+      toast.error(msg);
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const updateTime = (mIdx: number, tIdx: number, newTimeVal: string) => {
-    const timeStr = new Date(`2000-01-01T${newTimeVal}`).toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: true }).toUpperCase();
-    setMeds(prev => prev.map((m, i) => i === mIdx ? { ...m, times: m.times.map((tm, j) => j === tIdx ? timeStr : tm) } : m));
-    toast.success("Time updated");
-  };
+  // Group medications by name for cleaner UI
+  const groupedMeds: GroupedMed[] = meds.reduce((acc: GroupedMed[], curr) => {
+    const existing = acc.find(m => m.name === curr.name);
+    if (existing) {
+      existing.items.push(curr);
+    } else {
+      acc.push({ name: curr.name, dosage: "1 pill", items: [curr] });
+    }
+    return acc;
+  }, []);
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -69,45 +112,51 @@ const Medications = () => {
       </div>
 
       <div className="grid gap-4">
-        {meds.map((med, mIdx) => (
-          <motion.div key={mIdx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: mIdx * 0.05 }} className="glass-card rounded-2xl p-5 relative">
-            <button onClick={() => removeMed(mIdx)} className="absolute top-3 right-3 p-1.5 rounded-lg hover:bg-destructive/10 transition-colors">
-              <X className="h-4 w-4 text-destructive" />
-            </button>
-            <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <Pill className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <p className="font-medium text-foreground">{med.name}</p>
-                <p className="text-xs text-muted-foreground">{med.dosage}</p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {med.times.map((time, tIdx) => (
-                <div key={tIdx} className="flex items-center gap-2">
-                  <button
-                    onClick={() => toggle(mIdx, tIdx)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm transition-all border ${
-                      med.taken[tIdx]
-                        ? "bg-success/10 border-success/20 text-success"
-                        : "bg-card border-border text-muted-foreground hover:border-primary/30"
-                    }`}
-                  >
-                    {med.taken[tIdx] ? <Check className="h-3.5 w-3.5" /> : <Clock className="h-3.5 w-3.5" />}
-                    {time}
-                    {med.taken[tIdx] && <span className="text-xs">{t(lang, "taken")}</span>}
-                  </button>
-                  <input
-                    type="time"
-                    className="text-xs bg-muted rounded-lg px-2 py-1.5 border border-border text-foreground w-24"
-                    onChange={e => e.target.value && updateTime(mIdx, tIdx, e.target.value)}
-                  />
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
+            <Loader2 className="h-8 w-8 animate-spin mb-2" />
+            <p>Loading your medications...</p>
+          </div>
+        ) : groupedMeds.length === 0 ? (
+          <div className="glass-card rounded-2xl p-12 text-center">
+            <PillIcon className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
+            <h3 className="text-lg font-heading font-semibold text-foreground mb-1">No medications added</h3>
+            <p className="text-sm text-muted-foreground mb-6">Keep track of your supplements and prescriptions here.</p>
+            <Button onClick={() => setDialogOpen(true)} variant="outline">Add First Medication</Button>
+          </div>
+        ) : (
+          groupedMeds.map((med, mIdx) => (
+            <motion.div key={med.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: mIdx * 0.05 }} className="glass-card rounded-2xl p-5 relative">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <PillIcon className="h-5 w-5 text-primary" />
                 </div>
-              ))}
-            </div>
-          </motion.div>
-        ))}
+                <div>
+                  <p className="font-medium text-foreground">{med.name}</p>
+                  <p className="text-xs text-muted-foreground">{med.dosage}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {med.items.map((item) => (
+                  <div key={item.id} className="flex items-center gap-2">
+                    <button
+                      onClick={() => toggle(item.id, item.taken)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm transition-all border ${
+                        item.taken
+                          ? "bg-success/10 border-success/20 text-success"
+                          : "bg-card border-border text-muted-foreground hover:border-primary/30"
+                      }`}
+                    >
+                      {item.taken ? <Check className="h-3.5 w-3.5" /> : <Clock className="h-3.5 w-3.5" />}
+                      {item.time}
+                      {item.taken && <span className="text-xs">{t(lang, "taken")}</span>}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))
+        )}
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -119,8 +168,11 @@ const Medications = () => {
             <div className="space-y-2"><Label>{t(lang, "time")}</Label><Input type="time" value={newTime} onChange={e => setNewTime(e.target.value)} /></div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>{t(lang, "cancel")}</Button>
-            <Button onClick={addMed}>{t(lang, "add")}</Button>
+            <Button variant="outline" disabled={saving} onClick={() => setDialogOpen(false)}>{t(lang, "cancel")}</Button>
+            <Button onClick={addMed} disabled={saving}>
+              {saving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+              {t(lang, "add")}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

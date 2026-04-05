@@ -34,7 +34,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     } else {
       navigate("/login");
     }
-  }, []);
+  }, [navigate]);
 
   const firstName = user?.full_name?.split(" ")[0] || "User";
   const initials = user?.full_name

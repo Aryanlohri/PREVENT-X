@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   User, Lock, Mail, Camera, Target, Moon, Droplets, Apple, Ruler,
   Brain, MessageCircle, Smile, Sparkles, BellRing, Pill, FileBarChart, AlertTriangle,
   Shield, Share2, Download, Trash2, Sun, Languages, Accessibility,
-  HelpCircle, Headphones, Flag, Info, ChevronRight, Eye, EyeOff,
+  HelpCircle, Headphones, Flag, Info, ChevronRight, Eye, EyeOff, Loader2
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
@@ -23,7 +23,7 @@ const Section = ({ title, children, delay = 0 }: { title: string; children: Reac
   </motion.div>
 );
 
-const SettingRow = ({ icon: Icon, label, children, danger = false, onClick }: { icon: any; label: string; children?: React.ReactNode; danger?: boolean; onClick?: () => void }) => (
+const SettingRow = ({ icon: Icon, label, children, danger = false, onClick }: { icon: React.ElementType; label: string; children?: React.ReactNode; danger?: boolean; onClick?: () => void }) => (
   <div onClick={onClick} className="flex items-center justify-between px-6 py-3.5 hover:bg-accent/40 transition-colors cursor-pointer">
     <div className="flex items-center gap-3">
       <Icon className={`h-4.5 w-4.5 ${danger ? "text-destructive" : "text-muted-foreground"}`} />
@@ -35,6 +35,7 @@ const SettingRow = ({ icon: Icon, label, children, danger = false, onClick }: { 
 
 const Settings = () => {
   const { aiCompanionEnabled, setAiCompanionEnabled, language, setLanguage, fontSize, setFontSize } = useAppContext();
+  const [loading, setLoading] = useState(true);
 
   // Health Preferences
   const [stepGoal, setStepGoal] = useState("10000");
@@ -70,9 +71,11 @@ const Settings = () => {
   const [accessibilityOpen, setAccessibilityOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
 
-  // Edit Profile form
-  const [profileName, setProfileName] = useState("Alex Kumar");
-  const [profileBio, setProfileBio] = useState("Health enthusiast");
+  // Profile state from backend
+  const [profileName, setProfileName] = useState("");
+  const [profileBio, setProfileBio] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   // Password form
   const [currentPass, setCurrentPass] = useState("");
@@ -80,12 +83,26 @@ const Settings = () => {
   const [confirmPass, setConfirmPass] = useState("");
   const [showPass, setShowPass] = useState(false);
 
-  // Email/Phone form
-  const [email, setEmail] = useState("alex.kumar@email.com");
-  const [phone, setPhone] = useState("+1 (555) 123-4567");
-
   // Delete confirm
   const [deleteConfirm, setDeleteConfirm] = useState("");
+
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const user = await import("@/lib/api").then(m => m.fetchUserProfile());
+      setProfileName(user.full_name || "");
+      setEmail(user.email || "");
+      setProfileBio(user.pre_existing_condition || ""); // Using condition as bio for now
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const lang = language;
 
@@ -95,9 +112,14 @@ const Settings = () => {
     toast.success(on ? "Dark mode enabled" : "Light mode enabled");
   };
 
-  const handleSaveProfile = () => {
-    setEditProfileOpen(false);
-    toast.success("Profile updated successfully");
+  const handleSaveProfile = async () => {
+    try {
+      await import("@/lib/api").then(m => m.updateUserProfile({ full_name: profileName }));
+      setEditProfileOpen(false);
+      toast.success("Profile updated successfully");
+    } catch (err) {
+      toast.error("Failed to update profile");
+    }
   };
 
   const handleChangePassword = () => {
@@ -129,6 +151,15 @@ const Settings = () => {
     setTwoFA(on);
     toast.success(on ? "Two-factor authentication enabled" : "Two-factor authentication disabled");
   };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-muted-foreground">
+        <Loader2 className="h-8 w-8 animate-spin mb-2" />
+        <p>Loading settings...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto space-y-5">

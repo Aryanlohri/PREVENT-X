@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Brain, X, Minus, Send, Loader2 } from "lucide-react";
-import { sendChatMessage, fetchQuickQuestions, isAuthenticated } from "@/lib/api";
+import { sendChatMessage, fetchQuickQuestions, isAuthenticated, isApiError } from "@/lib/api";
 
 interface Message {
   role: "user" | "assistant";
@@ -30,7 +30,7 @@ export const AICompanion = () => {
     if (isOpen && quickChips.length === 0 && isAuthenticated()) {
       loadQuickQuestions();
     }
-  }, [isOpen]);
+  }, [isOpen, quickChips.length]);
 
   const loadQuickQuestions = async () => {
     setChipsLoading(true);
@@ -79,12 +79,12 @@ export const AICompanion = () => {
       const data = await sendChatMessage(payload);
       setTyping(false);
       setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setTyping(false);
-      const errorMsg =
-        err?.status === 401
-          ? "Your session has expired. Please log in again to continue."
-          : "I'm having trouble connecting right now. Please try again in a moment.";
+      const isAuthError = isApiError(err) && err.status === 401;
+      const errorMsg = isAuthError
+        ? "Your session has expired. Please log in again to continue."
+        : "I'm having trouble connecting right now. Please try again in a moment.";
       setMessages((prev) => [...prev, { role: "assistant", content: errorMsg }]);
     }
   };
