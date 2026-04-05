@@ -39,4 +39,4 @@ EXPOSE 8080
 # Start Global Gunicorn server with Uvicorn workers
 # -w 1: four worker processes for concurrency
 # -k uvicorn.workers.UvicornWorker: use uvicorn for async lifespan
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.main:app", "--bind", "0.0.0.0:8080"]
+CMD ["gunicorn", "app.main:app", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8080"]
