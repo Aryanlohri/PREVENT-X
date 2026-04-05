@@ -150,12 +150,12 @@ def generate_diet_and_exercise_plan(target_calories_str, target_macros_str, work
         })
 
     return {
-        "daily_goals": {
-            "target_calories": base_cals,
-            "target_protein": target_pro_g,
-            "target_carbs": target_carbs_g,
-            "target_fat": target_fat_g
-        },
+        "daily_goals": [
+            {"label": "Calorie Goal", "current": 0, "target": base_cals, "unit": "kcal"},
+            {"label": "Protein Goal", "current": 0, "target": target_pro_g, "unit": "g"},
+            {"label": "Carbs Goal", "current": 0, "target": target_carbs_g, "unit": "g"},
+            {"label": "Fat Goal", "current": 0, "target": target_fat_g, "unit": "g"}
+        ],
         "daily_meals": daily_meals,
         "daily_workouts": daily_workouts,
         "weekly_meals": week_meals,

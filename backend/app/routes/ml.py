@@ -99,7 +99,7 @@ class LifestylePlanResponse(BaseModel):
     macros: str
     workout_type: str
     intensity: str
-    daily_goals: Dict[str, Any]
+    daily_goals: List[Dict[str, Any]]
     daily_meals: List[Dict[str, Any]]
     daily_workouts: List[Dict[str, Any]]
     weekly_meals: List[Dict[str, Any]]
