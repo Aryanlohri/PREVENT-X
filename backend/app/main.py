@@ -8,23 +8,16 @@ from app.database.base import Base
 
 app = FastAPI()
 
-# Create DB tables (including the new ones)
+# Create DB tables
 Base.metadata.create_all(bind=engine)
 
-# Configure CORS dynamically for production
+# Configure CORS
 allowed_origins_env = os.getenv("VITE_ALLOWED_ORIGINS", "")
 allowed_origins = [origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()]
 
 if not allowed_origins:
     allowed_origins = [
-        "http://localhost:5173", 
-        "http://127.0.0.1:5173",
-        "http://localhost:8080",
-        "http://127.0.0.1:8080",
-        "http://localhost:8081",
-        "http://127.0.0.1:8081",
-        "http://localhost:8082",
-        "http://127.0.0.1:8082"
+        "https://prevent-x.vercel.app",
     ]
 
 app.add_middleware(
@@ -48,6 +41,8 @@ app.include_router(user.router, prefix="/api/users", tags=["Users"])
 def root():
     return {"message": "PreventX Backend Running 🚀"}
 
+# WebSocket — note: this will not work on Vercel (serverless)
+# Keep it here for local dev, but move to Railway/Render for production WS support
 from fastapi import WebSocket, WebSocketDisconnect
 from app.core.sockets import manager
 
@@ -56,8 +51,10 @@ async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         while True:
-            # Keep the connection open and wait for messages from the client
-            # (In this app, the client mostly just receives broadcasts, but we need to await receive)
             data = await websocket.receive_text()
     except WebSocketDisconnect:
         manager.disconnect(websocket)
+
+# Mangum handler — required for Vercel serverless
+from mangum import Mangum
+handler = Mangum(app, lifespan="off")
