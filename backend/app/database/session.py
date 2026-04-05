@@ -2,8 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.core.config import settings
 
-# Create engine
-engine = create_engine(settings.DATABASE_URL)
+# Create engine with cloud-optimized connection pooling
+engine = create_engine(
+    settings.DATABASE_URL,
+    pool_pre_ping=True, # Recommended for cloud DBs (Neon/Vercel) to avoid connection dropped errors
+)
 
 # Create session factory
 SessionLocal = sessionmaker(
