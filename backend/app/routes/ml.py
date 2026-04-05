@@ -109,7 +109,10 @@ def predict_risk(
             }
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error running prediction model: {str(e)}")
+        import traceback
+        error_details = traceback.format_exc()
+        print(f"Prediction Error: {error_details}")
+        raise HTTPException(status_code=500, detail=f"ML Prediction Error: {str(e)}")
 
 @router.post("/predict-disease", response_model=SymptomCheckResponse)
 def get_disease_prediction(

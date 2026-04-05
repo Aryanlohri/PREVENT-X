@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from app.routes import auth, vitals, medication, daily_log, chat, ml, user
 from app.database.session import engine
 from app.models import user as user_model, vitals as vitals_model, medication as medication_model, daily_log as daily_log_model
@@ -35,6 +36,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Trust Proxy Headers (Required for Railway/Vercel HTTPS)
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
 # Include routes
 app.include_router(auth.router, prefix="/auth", tags=["Auth"])

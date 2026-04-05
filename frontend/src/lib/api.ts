@@ -7,8 +7,6 @@ const IS_LOCALHOST = window.location.hostname === "localhost" || window.location
 const PROD_URL = "https://prevent-x-production.up.railway.app";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || (IS_LOCALHOST ? "http://localhost:8000" : PROD_URL);
 
-console.log("PreventX API Base URL:", BASE_URL);
-
 // ─── Token Management ──────────────────────────────────────────
 export function getToken(): string | null {
   return localStorage.getItem("preventx_token");
