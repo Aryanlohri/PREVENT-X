@@ -21,56 +21,93 @@ def predict_risk(
     Predict health risk based on user vitals data.
     """
     try:
-        # Fetch latest vitals
-        latest_vital = db.query(Vital).filter(Vital.user_id == current_user.id).order_by(Vital.timestamp.desc()).first()
+        # Fetch latest available vitals for each metric independently (persistence logic)
+        vitals_query = db.query(Vital).filter(Vital.user_id == current_user.id).order_by(Vital.timestamp.desc())
         
-        # We need mock or actual symptoms according to the new ML schema:
-        # Age, Gender, Polyuria, Polydipsia, sudden weight loss, weakness, Polyphagia,
-        # Genital thrush, visual blurring, Itching, Irritability, delayed healing,
-        # partial paresis, muscle stiffness, Alopecia, Obesity
+        latest_bp_sys = vitals_query.filter(Vital.blood_pressure_sys != None).first()
+        latest_bp_dia = vitals_query.filter(Vital.blood_pressure_dia != None).first()
+        latest_sugar = vitals_query.filter(Vital.blood_sugar != None).first()
+        latest_hr = vitals_query.filter(Vital.heart_rate != None).first()
+        latest_bmi = vitals_query.filter(Vital.bmi != None).first()
         
-        # Map the user's real age and gender if available, otherwise fallback to defaults
+        # Mapping Clinical Heuristics for responsive scoring
+        vitals_risk_bonus = 0
+        
+        # 1. Blood Pressure Risk
+        if latest_bp_sys and latest_bp_dia:
+            sys = latest_bp_sys.blood_pressure_sys
+            dia = latest_bp_dia.blood_pressure_dia
+            if sys > 180 or dia > 110:
+                vitals_risk_bonus += 60 # CRISIS range
+            elif sys > 160 or dia > 100:
+                vitals_risk_bonus += 35 # Crisis/Stage 2
+            elif sys > 140 or dia > 90:
+                vitals_risk_bonus += 15 # Stage 1 Hypertension
+                
+        # 2. Blood Sugar Risk
+        if latest_sugar:
+            sugar = latest_sugar.blood_sugar
+            if sugar > 300:
+                vitals_risk_bonus += 65 # CRISIS range
+            elif sugar > 200:
+                vitals_risk_bonus += 45 # Very High / Diabetic range
+            elif sugar > 140:
+                vitals_risk_bonus += 20 # Elevated
+                
+        # 3. Heart Rate Risk
+        if latest_hr:
+            hr = latest_hr.heart_rate
+            if hr > 100 or hr < 50:
+                vitals_risk_bonus += 10 # Tachycardia/Bradycardia
+                
+        # 4. Obesity Risk (BMI)
+        bmi = latest_bmi.bmi if latest_bmi else 22.0
+        obesity = 1 if bmi >= 30 else 0
+        if obesity:
+            vitals_risk_bonus += 10
+
+        # Map the user's real age and gender if available
         age = current_user.age if current_user.age else 45
         gender = 1 if current_user.gender == 'Male' else 0
         
-        # Hardcoding default absence of severe symptoms unless vital signs hint otherwise
-        polyuria = 0
-        polydipsia = 0
-        weight_loss = 0
-        weakness = 0 
-        polyphagia = 0
-        genital_thrush = 0
-        blurring = 0
-        itching = 0
-        irritability = 0
-        healing = 0
-        paresis = 0
-        stiffness = 0
-        alopecia = 0
-        
-        # We can extract obesity from BMI
-        bmi = latest_vital.bmi if latest_vital else 22.0
-        obesity = 1 if bmi >= 30 else 0
-        
+        # ML Prediction (Symptom-based baseline)
         prediction = predict_health_risk(
             age=age,
             gender=gender,
-            polyuria=polyuria,
-            polydipsia=polydipsia,
-            weight_loss=weight_loss,
-            weakness=weakness,
-            polyphagia=polyphagia,
-            genital_thrush=genital_thrush,
-            blurring=blurring,
-            itching=itching,
-            irritability=irritability,
-            healing=healing,
-            paresis=paresis,
-            stiffness=stiffness,
-            alopecia=alopecia,
+            polyuria=0,
+            polydipsia=0,
+            weight_loss=0,
+            weakness=0,
+            polyphagia=0,
+            genital_thrush=0,
+            blurring=0,
+            itching=0,
+            irritability=0,
+            healing=0,
+            paresis=0,
+            stiffness=0,
+            alopecia=0,
             obesity=obesity
         )
-        return RiskPredictionResponse(**prediction)
+        
+        # Merge ML Score with Vitals Heuristics
+        ml_score = prediction["risk_score"]
+        final_score = min(100, ml_score + vitals_risk_bonus)
+        
+        # Update Level and Response
+        level = "Low Risk"
+        if final_score > 40: level = "Moderate Risk"
+        if final_score > 70: level = "High Risk"
+        
+        return RiskPredictionResponse(
+            risk_level=level,
+            risk_score=final_score,
+            probabilities={
+                "low": float(max(0, 100 - final_score) / 100),
+                "moderate": 0.0,
+                "high": float(final_score / 100)
+            }
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error running prediction model: {str(e)}")
 

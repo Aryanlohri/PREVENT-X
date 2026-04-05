@@ -3,6 +3,7 @@ import { Activity, Heart, Droplets, Scale, TrendingUp, TrendingDown, Minus, Ligh
 import { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 import { useAppContext } from "@/contexts/AppContext";
 import { t } from "@/lib/translations";
 import {
@@ -11,11 +12,15 @@ import {
   fetchRiskPrediction,
   fetchDailyLogs,
   toggleMedication,
+  postDailyLog,
   type VitalRecord,
   type MedicationRecord,
   type DailyLogRecord,
+  type DailyLogCreatePayload,
   isAuthenticated,
 } from "@/lib/api";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 const trendIcon = (tr: "up" | "down" | "stable") =>
   tr === "up" ? <TrendingUp className="h-4 w-4" /> : tr === "down" ? <TrendingDown className="h-4 w-4" /> : <Minus className="h-4 w-4" />;
@@ -45,6 +50,27 @@ const Dashboard = () => {
       return;
     }
     loadDashboardData();
+
+    // ── Real-time WebSocket Listener ──
+    const wsUrl = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000").replace(/^http/, "ws") + "/ws";
+    const socket = new WebSocket(wsUrl);
+
+    socket.onmessage = (event) => {
+      try {
+        const msg = JSON.parse(event.data);
+        if (msg.type === "VITALS_UPDATED" || msg.type === "LOGS_UPDATED") {
+          console.log("Real-time sync triggered:", msg.type);
+          loadDashboardData(); // Re-fetch to update gauge and cards
+        }
+      } catch (e) {
+        console.error("WS parse error:", e);
+      }
+    };
+
+    socket.onclose = () => console.log("Dashboard WS disconnected — will re-sync on next refresh.");
+    return () => {
+      if (socket.readyState === WebSocket.OPEN) socket.close();
+    };
   }, []);
 
   const loadDashboardData = async () => {
@@ -84,44 +110,84 @@ const Dashboard = () => {
     });
   })();
 
-  // ── Derive Latest Vitals Cards from most recent record ──
-  const latestVital = vitalsData[0] || null;
-  const prevVital = vitalsData[1] || null;
+  // ── Derive Latest Vitals from multiple records to prevent data vanishing ──
+  const getLatestValue = (field: keyof VitalRecord) => {
+    return vitalsData.find((v) => v[field] !== null)?.[field] || null;
+  };
+
+  const getPreviousValue = (field: keyof VitalRecord) => {
+    const validEntries = vitalsData.filter((v) => v[field] !== null);
+    return validEntries.length > 1 ? validEntries[1][field] : null;
+  };
+
+  const latestBP = {
+    sys: getLatestValue("blood_pressure_sys") as number | null,
+    dia: getLatestValue("blood_pressure_dia") as number | null,
+  };
+  const prevBP_sys = getPreviousValue("blood_pressure_sys") as number | null;
+
+  const latestSugar = getLatestValue("blood_sugar") as number | null;
+  const prevSugar = getPreviousValue("blood_sugar") as number | null;
+
+  const latestHeart = getLatestValue("heart_rate") as number | null;
+  const prevHeart = getPreviousValue("heart_rate") as number | null;
+
+  const latestBMI = getLatestValue("bmi") as number | null;
+  const prevBMI = getPreviousValue("bmi") as number | null;
 
   const vitals = [
     {
       icon: Activity,
       label: t(lang, "bloodPressure"),
-      value: latestVital ? `${latestVital.blood_pressure_sys || "--"}/${latestVital.blood_pressure_dia || "--"}` : "--/--",
+      value: latestBP.sys ? `${latestBP.sys}/${latestBP.dia || "--"}` : "--/--",
       unit: "mmHg",
-      trend: computeTrend(latestVital?.blood_pressure_sys ?? null, prevVital?.blood_pressure_sys ?? null),
+      trend: computeTrend(latestBP.sys, prevBP_sys),
       color: "text-secondary",
     },
     {
       icon: Droplets,
       label: t(lang, "bloodSugar"),
-      value: latestVital?.blood_sugar?.toString() || "--",
+      value: latestSugar?.toString() || "--",
       unit: "mg/dL",
-      trend: computeTrend(latestVital?.blood_sugar ?? null, prevVital?.blood_sugar ?? null),
+      trend: computeTrend(latestSugar, prevSugar),
       color: "text-success",
     },
     {
       icon: Heart,
       label: t(lang, "heartRate"),
-      value: latestVital?.heart_rate?.toString() || "--",
+      value: latestHeart?.toString() || "--",
       unit: "bpm",
-      trend: computeTrend(latestVital?.heart_rate ?? null, prevVital?.heart_rate ?? null),
+      trend: computeTrend(latestHeart, prevHeart),
       color: "text-destructive",
     },
     {
       icon: Scale,
       label: t(lang, "bmi"),
-      value: latestVital?.bmi?.toFixed(1) || "--",
+      value: latestBMI?.toFixed(1) || "--",
       unit: "kg/m²",
-      trend: computeTrend(latestVital?.bmi ?? null, prevVital?.bmi ?? null),
+      trend: computeTrend(latestBMI, prevBMI),
       color: "text-warning",
     },
   ];
+
+  // ── Daily Check-in Form ──
+  const [showCheckIn, setShowCheckIn] = useState(false);
+  const [checkInData, setCheckInData] = useState<DailyLogCreatePayload>({
+    stress_level: 5,
+    sleep_quality: 5,
+    diet_quality: 5,
+  });
+
+  const handleCheckIn = async () => {
+    try {
+      await postDailyLog(checkInData);
+      toast.success("Wellness log updated!");
+      setShowCheckIn(false);
+      loadDashboardData(); // Refresh to update score
+    } catch {
+      toast.error("Failed to save log.");
+    }
+  };
 
   // ── Medication toggle (calls real backend) ──
   const handleToggleMed = async (i: number) => {
@@ -257,10 +323,44 @@ const Dashboard = () => {
               <div><p className="text-xl font-bold font-heading text-secondary">{recentLogs.length}</p><p className="text-[10px] text-muted-foreground">{t(lang, "checkIns")}</p></div>
             </div>
             <div className="border-t border-border/50 pt-3 text-center">
-              <p className="text-xs text-muted-foreground mb-1">{t(lang, "needSupport")}</p>
-              <p className="text-xs text-secondary flex items-center justify-center gap-1 cursor-pointer hover:underline">
-                <MessageCircle className="h-3 w-3" /> {t(lang, "clickChat")}
-              </p>
+              <Dialog open={showCheckIn} onOpenChange={setShowCheckIn}>
+                <DialogTrigger asChild>
+                  <Button variant="ghost" size="sm" className="w-full text-secondary hover:text-secondary hover:bg-secondary/10 flex items-center justify-center gap-1">
+                    <Check className="h-3 w-3" /> Log Daily Wellness
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="glass-card border-none">
+                  <DialogHeader>
+                    <DialogTitle className="font-heading">Daily Check-in</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-6 pt-4">
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-muted-foreground flex items-center gap-2"><Moon className="h-4 w-4" /> Sleep Quality</span>
+                        <span className="font-bold">{checkInData.sleep_quality}/10</span>
+                      </div>
+                      <input type="range" min="1" max="10" value={checkInData.sleep_quality} onChange={(e) => setCheckInData(p => ({ ...p, sleep_quality: parseInt(e.target.value) }))} className="w-full" />
+                    </div>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-muted-foreground flex items-center gap-2"><Brain className="h-4 w-4" /> Stress Level</span>
+                        <span className="font-bold">{checkInData.stress_level}/10</span>
+                      </div>
+                      <input type="range" min="1" max="10" value={checkInData.stress_level} onChange={(e) => setCheckInData(p => ({ ...p, stress_level: parseInt(e.target.value) }))} className="w-full" />
+                    </div>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-muted-foreground flex items-center gap-2"><Apple className="h-4 w-4" /> Diet Quality</span>
+                        <span className="font-bold">{checkInData.diet_quality}/10</span>
+                      </div>
+                      <input type="range" min="1" max="10" value={checkInData.diet_quality} onChange={(e) => setCheckInData(p => ({ ...p, diet_quality: parseInt(e.target.value) }))} className="w-full" />
+                    </div>
+                    <Button onClick={handleCheckIn} className="w-full bg-secondary hover:bg-secondary/90 text-white font-heading mt-2">
+                      Save Check-in
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </motion.div>
 

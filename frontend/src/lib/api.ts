@@ -210,6 +210,13 @@ export interface MedicationCreatePayload {
   taken?: boolean;
 }
 
+export interface DailyLogCreatePayload {
+  sleep_quality?: number;
+  stress_level?: number;
+  diet_quality?: number;
+  physical_activity?: number;
+}
+
 export interface ProfileUpdatePayload {
   full_name?: string;
   age?: number;
@@ -288,6 +295,7 @@ export const createMedication = (payload: MedicationCreatePayload) => apiPost<Me
 export const toggleMedication = (medId: number, taken: boolean) => apiPatch<MedicationRecord>(`/api/medications/${medId}`, { taken });
 
 export const fetchDailyLogs = () => apiGet<DailyLogRecord[]>("/api/daily-logs");
+export const postDailyLog = (payload: DailyLogCreatePayload) => apiPost<DailyLogRecord>("/api/daily-logs", payload);
 export const fetchRiskPrediction = () => apiGet<RiskPrediction>("/api/ml/predict-risk");
 export const fetchLifestylePlan = () => apiGet<LifestylePlanResponse>("/api/ml/my-lifestyle-plan");
 export const fetchQuickQuestions = () => apiGet<QuickQuestionsResponse>("/api/chat/quick-questions");

@@ -10,6 +10,7 @@ import { AICompanion } from "@/components/ai-companion/AICompanion";
 import { useAppContext } from "@/contexts/AppContext";
 import { t } from "@/lib/translations";
 import { fetchUserProfile, logoutUser, isAuthenticated, type UserProfile } from "@/lib/api";
+import logo from "@/assets/preventx-logo.svg";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -63,7 +64,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <aside className="hidden lg:flex flex-col w-64 glass-card border-r border-border/50 fixed inset-y-0 left-0 z-30">
         <div className="p-6">
           <Link to="/" className="flex items-center gap-2">
-            <Heart className="h-7 w-7 text-primary" />
+            <img src={logo} alt="Logo" className="h-8 w-8" />
             <span className="font-heading text-xl font-bold text-foreground">PreventX</span>
           </Link>
         </div>
@@ -93,7 +94,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           <aside className="absolute inset-y-0 left-0 w-72 glass-card border-r border-border/50 flex flex-col">
             <div className="p-6 flex items-center justify-between">
               <Link to="/" className="flex items-center gap-2">
-                <Heart className="h-7 w-7 text-primary" />
+                <img src={logo} alt="PreventX Logo" className="h-8 w-8" />
                 <span className="font-heading text-xl font-bold text-foreground">PreventX</span>
               </Link>
               <button onClick={() => setSidebarOpen(false)}><X className="h-5 w-5 text-muted-foreground" /></button>

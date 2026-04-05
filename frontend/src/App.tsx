@@ -17,6 +17,8 @@ import Profile from "./pages/Profile";
 import RiskPrediction from "./pages/RiskPrediction";
 import NotFound from "./pages/NotFound";
 import DashboardLayout from "./components/layout/DashboardLayout";
+import PreventXLoader from "./components/common/PreventXLoader";
+import { useState, useEffect } from "react";
 
 const queryClient = new QueryClient();
 
@@ -24,31 +26,38 @@ const DashboardPage = ({ children }: { children: React.ReactNode }) => (
   <DashboardLayout>{children}</DashboardLayout>
 );
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AppProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/dashboard" element={<DashboardPage><Dashboard /></DashboardPage>} />
-            <Route path="/vitals" element={<DashboardPage><Vitals /></DashboardPage>} />
-            <Route path="/diet-exercise" element={<DashboardPage><DietExercise /></DashboardPage>} />
-            <Route path="/settings" element={<DashboardPage><Settings /></DashboardPage>} />
-            <Route path="/medications" element={<DashboardPage><Medications /></DashboardPage>} />
-            <Route path="/notifications" element={<DashboardPage><Notifications /></DashboardPage>} />
-            <Route path="/profile" element={<DashboardPage><Profile /></DashboardPage>} />
-            <Route path="/risk-prediction" element={<DashboardPage><RiskPrediction /></DashboardPage>} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AppProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AppProvider>
+        <TooltipProvider>
+          {!isLoaded && <PreventXLoader onComplete={() => setIsLoaded(true)} />}
+          <div className={isLoaded ? "opacity-100 transition-opacity duration-1000" : "opacity-0"}>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/dashboard" element={<DashboardPage><Dashboard /></DashboardPage>} />
+                <Route path="/vitals" element={<DashboardPage><Vitals /></DashboardPage>} />
+                <Route path="/diet-exercise" element={<DashboardPage><DietExercise /></DashboardPage>} />
+                <Route path="/settings" element={<DashboardPage><Settings /></DashboardPage>} />
+                <Route path="/medications" element={<DashboardPage><Medications /></DashboardPage>} />
+                <Route path="/notifications" element={<DashboardPage><Notifications /></DashboardPage>} />
+                <Route path="/profile" element={<DashboardPage><Profile /></DashboardPage>} />
+                <Route path="/risk-prediction" element={<DashboardPage><RiskPrediction /></DashboardPage>} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </div>
+        </TooltipProvider>
+      </AppProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

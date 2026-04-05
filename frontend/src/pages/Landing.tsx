@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Shield, Activity, FileText, Lightbulb, ArrowRight, Heart, Brain, CheckCircle } from "lucide-react";
+import { Shield, Activity, FileText, Lightbulb, ArrowRight, Brain, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroIllustration from "@/assets/hero-illustration.png";
+import logo from "@/assets/preventx-logo.svg";
 
 const features = [
   { icon: Shield, title: "Risk Prediction", description: "AI-powered early detection of potential health risks based on your data and lifestyle." },
@@ -24,7 +25,7 @@ const Landing = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-border/50">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <Heart className="h-7 w-7 text-primary" />
+            <img src={logo} alt="Logo" className="h-8 w-8" />
             <span className="font-heading text-xl font-bold text-foreground">PreventX</span>
           </Link>
           <div className="hidden md:flex items-center gap-8">
@@ -195,7 +196,7 @@ const Landing = () => {
       <footer className="border-t border-border/50 py-8 px-6">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <Heart className="h-5 w-5 text-primary" />
+            <img src={logo} alt="Logo" className="h-5 w-5" />
             <span className="font-heading font-semibold text-foreground">PreventX</span>
           </div>
           <p className="text-sm text-muted-foreground">© 2026 PreventX. All rights reserved.</p>
