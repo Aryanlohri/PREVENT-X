@@ -34,9 +34,9 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
 # Expose the API port
-EXPOSE 8000
+EXPOSE 8080
 
 # Start Global Gunicorn server with Uvicorn workers
 # -w 4: four worker processes for concurrency
 # -k uvicorn.workers.UvicornWorker: use uvicorn for async lifespan
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.main:app", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.main:app", "--bind", "0.0.0.0:8080"]
