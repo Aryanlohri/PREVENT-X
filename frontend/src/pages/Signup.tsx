@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Heart, Mail, Lock, User, ArrowRight } from "lucide-react";
+import logo from "@/assets/preventx-logo.svg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -41,7 +42,7 @@ const Signup = () => {
       >
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <Heart className="h-8 w-8 text-primary" />
+            <img src={logo} alt="PreventX Logo" className="h-10 w-auto" />
             <span className="font-heading text-2xl font-bold text-foreground">PreventX</span>
           </Link>
           <h1 className="font-heading text-2xl font-bold text-foreground">Create your account</h1>
