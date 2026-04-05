@@ -42,6 +42,8 @@ export const translations = {
     // Risk Prediction
     riskPredictionTitle: "Risk Prediction & Recommendation",
     riskPredictionDesc: "AI-powered analysis of your health risks and personalized guidance",
+    healthRiskDashboard: "Health Risk Dashboard",
+    aiSymptomChecker: "AI Symptom Checker",
     conditionRiskAnalysis: "Condition-Specific Risk Analysis",
     riskLevel: "Risk Level",
     contributingFactors: "Contributing Factors",
@@ -262,6 +264,8 @@ export const translations = {
     // Risk Prediction
     riskPredictionTitle: "जोखिम पूर्वानुमान और सिफारिश",
     riskPredictionDesc: "आपके स्वास्थ्य जोखिमों का AI-संचालित विश्लेषण और व्यक्तिगत मार्गदर्शन",
+    healthRiskDashboard: "स्वास्थ्य जोखिम डैशबोर्ड",
+    aiSymptomChecker: "AI लक्षण जांचकर्ता",
     conditionRiskAnalysis: "रोग-विशिष्ट जोखिम विश्लेषण",
     riskLevel: "जोखिम स्तर",
     contributingFactors: "योगदान करने वाले कारक",

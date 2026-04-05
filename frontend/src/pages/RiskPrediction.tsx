@@ -21,6 +21,9 @@ function normalizeScore(vals: (number | null)[], invert = false): number {
   return invert ? Math.round((10 - avg) * 10) : Math.round(avg * 10);
 }
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SymptomChecker } from "@/components/health/SymptomChecker";
+
 const RiskPrediction = () => {
   const { language: lang } = useAppContext();
 
@@ -28,6 +31,7 @@ const RiskPrediction = () => {
   const [risk, setRisk] = useState<RiskPredictionType | null>(null);
   const [logs, setLogs] = useState<DailyLogRecord[]>([]);
   const [vitals, setVitals] = useState<VitalRecord[]>([]);
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -176,10 +180,26 @@ const RiskPrediction = () => {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      <div>
-        <h1 className="font-heading text-2xl font-bold text-foreground">{t(lang, "riskPredictionTitle")}</h1>
-        <p className="text-sm text-muted-foreground">{t(lang, "riskPredictionDesc")}</p>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 className="font-heading text-2xl font-bold text-foreground">{t(lang, "riskPredictionTitle")}</h1>
+          <p className="text-sm text-muted-foreground">{t(lang, "riskPredictionDesc")}</p>
+        </div>
+
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full md:w-auto">
+          <TabsList className="grid w-full grid-cols-2 rounded-xl bg-muted/50 p-1">
+            <TabsTrigger value="dashboard" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm text-xs md:text-sm">
+              {t(lang, "healthRiskDashboard")}
+            </TabsTrigger>
+            <TabsTrigger value="symptoms" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm text-xs md:text-sm">
+              {t(lang, "aiSymptomChecker")}
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
+
+      <Tabs value={activeTab} className="mt-0 space-y-6">
+        <TabsContent value="dashboard" className="m-0 space-y-6 focus-visible:outline-none focus-visible:ring-0">
 
       {/* Condition-Specific Risk Analysis — derived from ML + vitals */}
       <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
@@ -260,6 +280,12 @@ const RiskPrediction = () => {
           ))}
         </div>
       </motion.div>
+        </TabsContent>
+
+        <TabsContent value="symptoms" className="m-0 focus-visible:outline-none focus-visible:ring-0">
+          <SymptomChecker />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

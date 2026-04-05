@@ -24,9 +24,20 @@ export function isAuthenticated(): boolean {
 
 // ─── Core Request Helpers ──────────────────────────────────────
 
-interface ApiError {
+export interface ApiError {
   status: number;
   detail: string;
+}
+
+export function isApiError(err: unknown): err is ApiError {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "status" in err &&
+    "detail" in err &&
+    typeof (err as { status: unknown }).status === "number" &&
+    typeof (err as { detail: unknown }).detail === "string"
+  );
 }
 
 function authHeaders(): Record<string, string> {
@@ -185,17 +196,102 @@ export interface QuickQuestionsResponse {
   questions: string[];
 }
 
+export interface VitalCreatePayload {
+  blood_pressure_sys?: number;
+  blood_pressure_dia?: number;
+  heart_rate?: number;
+  blood_sugar?: number;
+  bmi?: number;
+}
+
+export interface MedicationCreatePayload {
+  name: string;
+  time: string;
+  taken?: boolean;
+}
+
+export interface ProfileUpdatePayload {
+  full_name?: string;
+  age?: number;
+  gender?: string;
+  height?: number;
+  weight?: number;
+  pre_existing_condition?: string;
+}
+
+export interface LifestylePlanResponse {
+  calories: string;
+  macros: string;
+  workout_type: string;
+  intensity: string;
+  daily_goals: {
+    label: string;
+    current: number;
+    target: number;
+    unit?: string;
+  }[];
+  daily_meals: {
+    type: string;
+    time: string;
+    items: { name: string; cal: number }[];
+  }[];
+  daily_workouts: {
+    name: string;
+    type: string;
+    intensity: string;
+    time: string;
+    duration: string;
+    calories: number;
+  }[];
+  weekly_meals: {
+    day: string;
+    meals: number;
+    calories: number;
+    protein: number;
+  }[];
+  weekly_workouts: {
+    day: string;
+    workouts: number;
+    calories: number;
+    duration: string;
+  }[];
+}
+
+export interface SymptomCheckRequest {
+  symptoms: string[];
+}
+
+export interface PredictionItem {
+  probable_disease: string;
+  confidence: number;
+  prevention_steps: string[];
+  recommended_doctors: string[];
+  diet_advice: string[];
+  medication_advice: string[];
+}
+
+export interface SymptomCheckResponse {
+  urgency_level: string;
+  predictions: PredictionItem[];
+}
+
 // ─── Domain API Functions ──────────────────────────────────────
 
 export const fetchUserProfile = () => apiGet<UserProfile>("/api/users/me");
+export const updateUserProfile = (payload: ProfileUpdatePayload) => apiPut<UserProfile>("/api/users/me", payload);
+
 export const fetchVitals = () => apiGet<VitalRecord[]>("/api/vitals");
+export const createVital = (payload: VitalCreatePayload) => apiPost<VitalRecord>("/api/vitals", payload);
+
 export const fetchMedications = () => apiGet<MedicationRecord[]>("/api/medications");
+export const createMedication = (payload: MedicationCreatePayload) => apiPost<MedicationRecord>("/api/medications", payload);
+export const toggleMedication = (medId: number, taken: boolean) => apiPatch<MedicationRecord>(`/api/medications/${medId}`, { taken });
+
 export const fetchDailyLogs = () => apiGet<DailyLogRecord[]>("/api/daily-logs");
 export const fetchRiskPrediction = () => apiGet<RiskPrediction>("/api/ml/predict-risk");
+export const fetchLifestylePlan = () => apiGet<LifestylePlanResponse>("/api/ml/my-lifestyle-plan");
 export const fetchQuickQuestions = () => apiGet<QuickQuestionsResponse>("/api/chat/quick-questions");
+export const predictDisease = (symptoms: string[]) => apiPost<SymptomCheckResponse>("/api/ml/predict-disease", { symptoms });
 
 export const sendChatMessage = (messages: ChatMessagePayload[]) =>
   apiPost<ChatResponse>("/api/chat", { messages });
-
-export const toggleMedication = (medId: number, taken: boolean) =>
-  apiPatch<MedicationRecord>(`/api/medications/${medId}`, { taken });
