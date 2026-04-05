@@ -100,12 +100,12 @@ const Medications = () => {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-heading text-2xl font-bold text-foreground">{t(lang, "medicationsTitle")}</h1>
-          <p className="text-sm text-muted-foreground">{t(lang, "medicationsDesc")}</p>
+          <h1 className="font-heading text-xl sm:text-2xl font-bold text-foreground">{t(lang, "medicationsTitle")}</h1>
+          <p className="text-xs sm:text-sm text-muted-foreground">{t(lang, "medicationsDesc")}</p>
         </div>
-        <Button onClick={() => setDialogOpen(true)} className="gradient-primary text-primary-foreground border-0 shadow-md hover:opacity-90">
+        <Button onClick={() => setDialogOpen(true)} className="gradient-primary text-primary-foreground border-0 shadow-md hover:opacity-90 w-full sm:w-auto h-11 sm:h-auto">
           <Plus className="h-4 w-4 mr-2" />
           {t(lang, "addMedication")}
         </Button>
@@ -127,31 +127,30 @@ const Medications = () => {
         ) : (
           groupedMeds.map((med, mIdx) => (
             <motion.div key={med.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: mIdx * 0.05 }} className="glass-card rounded-2xl p-5 relative">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 rounded-lg bg-primary/10">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+                <div className="p-2 rounded-lg bg-primary/10 shrink-0 w-max">
                   <PillIcon className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <p className="font-medium text-foreground">{med.name}</p>
+                  <p className="font-medium text-foreground text-base">{med.name}</p>
                   <p className="text-xs text-muted-foreground">{med.dosage}</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2">
                 {med.items.map((item) => (
-                  <div key={item.id} className="flex items-center gap-2">
-                    <button
-                      onClick={() => toggle(item.id, item.taken)}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm transition-all border ${
-                        item.taken
-                          ? "bg-success/10 border-success/20 text-success"
-                          : "bg-card border-border text-muted-foreground hover:border-primary/30"
-                      }`}
-                    >
-                      {item.taken ? <Check className="h-3.5 w-3.5" /> : <Clock className="h-3.5 w-3.5" />}
-                      {item.time}
-                      {item.taken && <span className="text-xs">{t(lang, "taken")}</span>}
-                    </button>
-                  </div>
+                  <button
+                    key={item.id}
+                    onClick={() => toggle(item.id, item.taken)}
+                    className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm transition-all border ${
+                      item.taken
+                        ? "bg-success/10 border-success/20 text-success"
+                        : "bg-card border-border text-muted-foreground hover:border-primary/30"
+                    }`}
+                  >
+                    {item.taken ? <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> : <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />}
+                    {item.time}
+                    {item.taken && <span className="text-[10px] sm:text-xs">({t(lang, "taken")})</span>}
+                  </button>
                 ))}
               </div>
             </motion.div>

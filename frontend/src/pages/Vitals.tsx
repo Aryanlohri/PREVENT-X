@@ -113,12 +113,12 @@ const Vitals = () => {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-heading text-2xl font-bold text-foreground">{t(lang, "vitalsTitle")}</h1>
-          <p className="text-sm text-muted-foreground">{t(lang, "vitalsDesc")}</p>
+          <h1 className="font-heading text-xl sm:text-2xl font-bold text-foreground">{t(lang, "vitalsTitle")}</h1>
+          <p className="text-xs sm:text-sm text-muted-foreground">{t(lang, "vitalsDesc")}</p>
         </div>
-        <Button onClick={() => setDialogOpen(true)} className="gradient-primary text-primary-foreground border-0 shadow-md hover:opacity-90">
+        <Button onClick={() => setDialogOpen(true)} className="gradient-primary text-primary-foreground border-0 shadow-md hover:opacity-90 w-full sm:w-auto h-11 sm:h-auto">
           <Plus className="h-4 w-4 mr-2" />
           {t(lang, "logVital")}
         </Button>
@@ -144,20 +144,22 @@ const Vitals = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: Math.min(i * 0.04, 0.4) }}
-              className="glass-card-hover rounded-xl p-4 flex items-center justify-between"
+              className="glass-card-hover rounded-xl p-4"
             >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Activity className="h-4 w-4 text-primary" />
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-primary/10 shrink-0">
+                    <Activity className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{r.label}</p>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground">{r.date}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">{r.label}</p>
-                  <p className="text-xs text-muted-foreground">{r.date}</p>
+                <div className="flex items-baseline sm:items-center justify-between sm:justify-end gap-3 border-t sm:border-0 pt-2 sm:pt-0 border-border/50">
+                  <span className="text-base sm:text-lg font-semibold text-foreground">{r.value}</span>
+                  <TrendingUp className="h-4 w-4 text-success shrink-0" />
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-lg font-semibold text-foreground">{r.value}</span>
-                <TrendingUp className="h-4 w-4 text-success" />
               </div>
             </motion.div>
           ))

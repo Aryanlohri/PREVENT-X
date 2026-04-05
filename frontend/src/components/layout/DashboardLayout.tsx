@@ -115,24 +115,26 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
       {/* Main Content */}
       <div className="flex-1 lg:ml-64">
-        <header className="sticky top-0 z-20 glass-card border-b border-border/50 px-6 h-16 flex items-center justify-between">
+        <header className="sticky top-0 z-20 glass-card border-b border-border/50 px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <button className="lg:hidden" onClick={() => setSidebarOpen(true)}><Menu className="h-5 w-5 text-foreground" /></button>
-            <h2 className="font-heading font-semibold text-foreground">
+            <button className="lg:hidden p-1.5 hover:bg-accent rounded-lg transition-colors" onClick={() => setSidebarOpen(true)}>
+              <Menu className="h-5 w-5 text-foreground" />
+            </button>
+            <h2 className="font-heading font-semibold text-foreground text-sm sm:text-base">
               {t(lang, "welcomeBack")} <span className="gradient-text">{firstName}</span>
             </h2>
           </div>
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="relative" onClick={() => navigate("/notifications")}>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Button variant="ghost" size="icon" className="relative h-9 w-9 sm:h-10 sm:w-10" onClick={() => navigate("/notifications")}>
               <Bell className="h-5 w-5 text-muted-foreground" />
-              <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-destructive" />
+              <span className="absolute top-2.5 right-2.5 h-2 w-2 rounded-full bg-destructive border-2 border-background" />
             </Button>
-            <Avatar className="h-9 w-9 cursor-pointer" onClick={() => navigate("/profile")}>
-              <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm">{initials}</AvatarFallback>
+            <Avatar className="h-8 w-8 sm:h-9 sm:w-9 cursor-pointer" onClick={() => navigate("/profile")}>
+              <AvatarFallback className="bg-primary/10 text-primary font-semibold text-xs sm:text-sm">{initials}</AvatarFallback>
             </Avatar>
           </div>
         </header>
-        <main className="p-6">{children}</main>
+        <main className="p-4 sm:p-6">{children}</main>
       </div>
 
       {aiCompanionEnabled && <AICompanion />}

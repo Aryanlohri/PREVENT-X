@@ -169,20 +169,20 @@ const Dashboard = () => {
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Row 1: Health Score + Vitals */}
       <div className="grid lg:grid-cols-3 gap-6">
-        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className={`glass-card rounded-2xl p-6 flex flex-col items-center justify-center ${riskGlow}`}>
-          <h3 className="font-heading font-semibold text-foreground mb-4">{t(lang, "healthRiskScore")}</h3>
-          <div className="relative w-36 h-36 mb-4">
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className={`glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center ${riskGlow}`}>
+          <h3 className="font-heading font-semibold text-foreground mb-4 text-sm sm:text-base">{t(lang, "healthRiskScore")}</h3>
+          <div className="relative w-28 h-28 sm:w-36 sm:h-36 mb-4">
             <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
               <circle cx="60" cy="60" r="52" fill="none" stroke="hsl(var(--muted))" strokeWidth="10" />
               <circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" strokeWidth="10" strokeDasharray={`${(riskScore / 100) * 327} 327`} strokeLinecap="round" className={riskColor} />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className={`text-3xl font-bold font-heading ${riskColor}`}>{riskScore}</span>
-              <span className="text-xs text-muted-foreground">/100</span>
+              <span className={`text-2xl sm:text-3xl font-bold font-heading ${riskColor}`}>{riskScore}</span>
+              <span className="text-[10px] sm:text-xs text-muted-foreground">/100</span>
             </div>
           </div>
-          <span className={`text-sm font-semibold ${riskColor}`}>{riskLevel}</span>
-          <p className="text-xs text-muted-foreground mt-1 text-center">{t(lang, "healthManaged")}</p>
+          <span className={`text-xs sm:text-sm font-semibold ${riskColor}`}>{riskLevel}</span>
+          <p className="text-[10px] sm:text-xs text-muted-foreground mt-1 text-center leading-tight">{t(lang, "healthManaged")}</p>
         </motion.div>
 
         <div className="lg:col-span-2 grid sm:grid-cols-2 gap-4">

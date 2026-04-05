@@ -78,29 +78,31 @@ export const SymptomChecker = () => {
           Select all symptoms you are currently experiencing. Our AI model will analyze patterns to identify probable conditions.
         </p>
 
-        <div className="flex flex-wrap gap-4 items-start">
-          <div className="w-full md:w-80">
+        <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-start">
+          <div className="w-full sm:w-80">
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
                   role="combobox"
                   aria-expanded={open}
-                  className="w-full justify-between rounded-xl"
+                  className="w-full justify-between rounded-xl h-11"
                 >
-                  {selected.length > 0 
-                    ? `${selected.length} symptoms selected` 
-                    : "Search symptoms..."}
+                  <span className="truncate">
+                    {selected.length > 0 
+                      ? `${selected.length} symptoms selected` 
+                      : "Search symptoms..."}
+                  </span>
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-[300px] p-0 rounded-xl overflow-hidden" align="start">
+              <PopoverContent className="w-[var(--radix-popover-trigger-width)] sm:w-[300px] p-0 rounded-xl overflow-hidden" align="start">
                 <Command>
                   <CommandInput placeholder="Search symptom..." />
                   <CommandEmpty>No symptom found.</CommandEmpty>
                   <CommandList>
                     <CommandGroup>
-                      <ScrollArea className="h-72">
+                      <ScrollArea className="h-64 sm:h-72">
                         {SYMPTOMS.map((s) => (
                           <CommandItem
                             key={s}
@@ -129,7 +131,7 @@ export const SymptomChecker = () => {
           <Button 
             onClick={handlePredict} 
             disabled={loading || selected.length === 0}
-            className="gradient-primary px-8 rounded-xl shadow-lg shadow-primary/20"
+            className="gradient-primary px-8 rounded-xl shadow-lg shadow-primary/20 h-11 flex-1 sm:flex-none"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Activity className="h-4 w-4 mr-2" />}
             Analyze Symptoms
@@ -145,7 +147,7 @@ export const SymptomChecker = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
               >
-                <Badge variant="secondary" className="pl-3 pr-1 py-1 rounded-lg flex items-center gap-1 bg-accent text-foreground border-transparent">
+                <Badge variant="secondary" className="pl-3 pr-1 py-1 rounded-lg flex items-center gap-1 bg-accent text-foreground border-transparent text-[11px] sm:text-xs">
                   {s.replace(/_/g, ' ')}
                   <button onClick={() => removeSymptom(s)} className="p-0.5 hover:bg-muted rounded-full transition-colors">
                     <X className="h-3 w-3" />
@@ -157,7 +159,7 @@ export const SymptomChecker = () => {
           {selected.length > 0 && (
             <button 
               onClick={() => setSelected([])}
-              className="text-xs text-muted-foreground hover:text-destructive underline underline-offset-4 ml-2"
+              className="text-[10px] sm:text-xs text-muted-foreground hover:text-destructive underline underline-offset-4 ml-2"
             >
               Clear all
             </button>
@@ -173,10 +175,10 @@ export const SymptomChecker = () => {
             className="space-y-6 pb-12"
           >
             <div className={`p-4 rounded-2xl border flex items-center gap-3 ${urgencyColor(result.urgency_level)}`}>
-              <AlertCircle className="h-5 w-5" />
+              <AlertCircle className="h-5 w-5 shrink-0" />
               <div>
-                <p className="text-sm font-bold uppercase tracking-wider">Urgency Level: {result.urgency_level}</p>
-                <p className="text-xs opacity-80">
+                <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">Urgency Level: {result.urgency_level}</p>
+                <p className="text-[10px] sm:text-xs opacity-80">
                   {result.urgency_level === "Emergency" 
                     ? "Immediate medical attention is advised." 
                     : result.urgency_level === "Urgent" 
@@ -186,58 +188,58 @@ export const SymptomChecker = () => {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {result.predictions.map((p, i) => (
                 <motion.div 
                   key={i} 
                   initial={{ opacity: 0, scale: 0.95 }} 
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.1 }}
-                  className="glass-card rounded-2xl p-6 relative overflow-hidden"
+                  className="glass-card rounded-2xl p-5 sm:p-6 relative overflow-hidden h-full"
                 >
                   <div className="absolute top-0 right-0 p-3">
-                    <span className="text-2xl font-bold text-primary/10 font-heading">#{i+1}</span>
+                    <span className="text-xl sm:text-2xl font-bold text-primary/10 font-heading">#{i+1}</span>
                   </div>
-                  <h4 className="text-lg font-bold font-heading text-foreground mb-1">{p.probable_disease}</h4>
+                  <h4 className="text-base sm:text-lg font-bold font-heading text-foreground mb-1 pr-8">{p.probable_disease}</h4>
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
                       <div className="h-full bg-primary" style={{ width: `${p.confidence}%` }} />
                     </div>
-                    <span className="text-sm font-semibold text-primary">{p.confidence}%</span>
+                    <span className="text-xs sm:text-sm font-semibold text-primary">{p.confidence}%</span>
                   </div>
 
                   <div className="space-y-4">
                     <div>
-                      <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest mb-1">Recommended Action</p>
-                      <ul className="space-y-1">
+                      <p className="text-[9px] sm:text-[10px] uppercase font-bold text-muted-foreground tracking-widest mb-1">Recommended Action</p>
+                      <ul className="space-y-1.5 sm:space-y-1">
                         {p.prevention_steps.slice(0, 2).map((s, j) => (
-                          <li key={j} className="text-xs text-foreground flex items-start gap-1.5 leading-relaxed">
-                            <Check className="h-3 w-3 text-success mt-0.5 shrink-0" /> {s}
+                          <li key={j} className="text-[11px] sm:text-xs text-foreground flex items-start gap-1.5 leading-relaxed">
+                            <Check className="h-3 w-3 text-success mt-0.5 shrink-0" /> <span>{s}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 pt-2">
-                       <div className="p-3 rounded-xl bg-accent/40 border border-border/50">
+                       <div className="p-2 sm:p-3 rounded-xl bg-accent/40 border border-border/50">
                           <div className="flex items-center gap-1.5 mb-1.5">
                             <Utensils className="h-3 w-3 text-success" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest">Diet</span>
+                            <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">Diet</span>
                           </div>
-                          <p className="text-[10px] text-muted-foreground leading-tight">{p.diet_advice[0] || "Standard diet"}</p>
+                          <p className="text-[9px] sm:text-[10px] text-muted-foreground leading-tight line-clamp-2">{p.diet_advice[0] || "Standard"}</p>
                        </div>
-                       <div className="p-3 rounded-xl bg-accent/40 border border-border/50">
+                       <div className="p-2 sm:p-3 rounded-xl bg-accent/40 border border-border/50">
                           <div className="flex items-center gap-1.5 mb-1.5">
                             <Pill className="h-3 w-3 text-secondary" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest">Meds</span>
+                            <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">Meds</span>
                           </div>
-                          <p className="text-[10px] text-muted-foreground leading-tight">{p.medication_advice[0] || "None specified"}</p>
+                          <p className="text-[9px] sm:text-[10px] text-muted-foreground leading-tight line-clamp-2">{p.medication_advice[0] || "None"}</p>
                        </div>
                     </div>
 
                     <div className="pt-2 border-t border-border/50 flex items-center justify-between">
-                       <span className="text-[10px] text-muted-foreground">Doctor: <span className="text-foreground font-medium">{p.recommended_doctors[0]}</span></span>
-                       <Info className="h-3 w-3 text-muted-foreground cursor-help" />
+                       <span className="text-[9px] sm:text-[10px] text-muted-foreground truncate mr-2">Doc: <span className="text-foreground font-medium">{p.recommended_doctors[0]}</span></span>
+                       <Info className="h-3 w-3 text-muted-foreground cursor-help shrink-0" />
                     </div>
                   </div>
                 </motion.div>
