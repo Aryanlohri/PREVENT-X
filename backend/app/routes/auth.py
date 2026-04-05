@@ -41,7 +41,7 @@ def signup(user: UserCreate, db: Session = Depends(get_db)):
 
     db.add(new_user)
     db.commit()
-    db.refresh(new_user)
+    # No refresh needed as we only need the email for the token
 
     # Create JWT token
     access_token = create_access_token(data={"sub": new_user.email})
